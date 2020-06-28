@@ -9,47 +9,74 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from ThermalFunction import ThermalFunction
 
 class Ui_IncidentHeat(object):
+    
     def setupUi(self, IncidentHeat):
         IncidentHeat.setObjectName("IncidentHeat")
         IncidentHeat.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(IncidentHeat)
         self.centralwidget.setObjectName("centralwidget")
-        self.h = QtWidgets.QSpinBox(self.centralwidget)
+
+        self.h = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.h.setGeometry(QtCore.QRect(290, 40, 91, 21))
         self.h.setObjectName("h")
-        self.r = QtWidgets.QSpinBox(self.centralwidget)
+        self.h.setMaximum(100000000)
+        self.h.setValue(500000.00)
+
+        self.r = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.r.setGeometry(QtCore.QRect(290, 60, 91, 21))
         self.r.setObjectName("r")
-        self.emissivity = QtWidgets.QSpinBox(self.centralwidget)
+        self.r.setValue(0.05)
+
+        self.emissivity = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.emissivity.setGeometry(QtCore.QRect(290, 90, 91, 21))
         self.emissivity.setObjectName("emissivity")
-        self.absorptivity = QtWidgets.QSpinBox(self.centralwidget)
+        self.emissivity.setValue(0.85)
+
+        self.absorptivity = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.absorptivity.setGeometry(QtCore.QRect(290, 110, 91, 21))
         self.absorptivity.setObjectName("absorptivity")
-        self.specificHeat = QtWidgets.QSpinBox(self.centralwidget)
+        self.absorptivity.setValue(0.65)
+
+        self.specificHeat = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.specificHeat.setGeometry(QtCore.QRect(290, 130, 91, 21))
         self.specificHeat.setObjectName("specificHeat")
-        self.density = QtWidgets.QSpinBox(self.centralwidget)
+        self.specificHeat.setMaximum(100000000)
+        self.specificHeat.setValue(880)
+
+        self.density = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.density.setGeometry(QtCore.QRect(290, 160, 91, 21))
         self.density.setObjectName("density")
-        self.initialtemperature = QtWidgets.QSpinBox(self.centralwidget)
+        self.density.setMaximum(100000000)
+        self.density.setValue(3970)
+
+        self.initialtemperature = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.initialtemperature.setGeometry(QtCore.QRect(290, 190, 91, 21))
         self.initialtemperature.setObjectName("initialtemperature")
-        self.eclipselength = QtWidgets.QSpinBox(self.centralwidget)
+        self.initialtemperature.setMaximum(100000000)
+        self.initialtemperature.setValue(200)
+
+        self.eclipselength = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.eclipselength.setGeometry(QtCore.QRect(290, 220, 91, 21))
         self.eclipselength.setObjectName("eclipselength")
-        self.period = QtWidgets.QSpinBox(self.centralwidget)
+        self.eclipselength.setValue(30)
+
+        self.period = QtWidgets.QDoubleSpinBox(self.centralwidget)
         self.period.setGeometry(QtCore.QRect(290, 240, 91, 21))
         self.period.setObjectName("period")
+        self.period.setMaximum(100000000)
+        self.period.setValue(90)
+
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser.setGeometry(QtCore.QRect(20, 30, 261, 241))
         self.textBrowser.setObjectName("textBrowser")
+
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(150, 300, 161, 51))
         self.pushButton.setObjectName("pushButton")
+
         IncidentHeat.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(IncidentHeat)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
@@ -62,6 +89,15 @@ class Ui_IncidentHeat(object):
         self.retranslateUi(IncidentHeat)
         QtCore.QMetaObject.connectSlotsByName(IncidentHeat)
 
+        def wrapper(self):
+            ThermalFunction(self.h.value(), self.r.value(), self.emissivity.value(), self.absorptivity.value(), self.specificHeat.value(), 
+            self.density.value(), self.initialtemperature.value(), self.eclipselength.value(), self.period.value())
+
+        self.pushButton.clicked.connect(lambda: wrapper(self))
+    
+
+
+    
     def retranslateUi(self, IncidentHeat):
         _translate = QtCore.QCoreApplication.translate
         IncidentHeat.setWindowTitle(_translate("IncidentHeat", "MainWindow"))
@@ -79,8 +115,7 @@ class Ui_IncidentHeat(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">eclipse length</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">period</span></p></body></html>"))
         self.pushButton.setText(_translate("IncidentHeat", "Plot"))
-
-
+    
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

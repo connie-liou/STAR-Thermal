@@ -78,4 +78,4 @@ def ThermalFunction(h, r, emissivity, absorptivity, specificHeat, density, start
     plt.xlabel('Time (min)')
 
     plt.show()
-ThermalFunction(500000, 0.05, 0.85, 0.65, 880, 3970, 373, 30, 90)
+#ThermalFunction(500000, 0.05, 0.85, 0.65, 880, 3970, 373, 30, 90)
