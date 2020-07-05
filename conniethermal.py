@@ -32,17 +32,18 @@ dQList = []  # watts
 totalHeatList = [] # joules
 totalChangeInHeat = 0
 Tlist = []
-startTemp = 273
+startTemp = 300
 currentTemp = startTemp  # initial temp
-time = [x for x in range(1000)]
+time = [x for x in range(100000)]
 for i in time:
     orbitTime = i % period
     in_eclipse = (orbitTime > sunLength/2) and (orbitTime < sunLength/2 + eclipseLength)
     
     heightFactor = Rearth / pow(Rearth + h, 2)
     
-    dQAlbedo = absorptivity * solarFlux * albedo * crossSectionalArea * heightFactor
     dQIR = emissivity * Searth * crossSectionalArea * heightFactor
+    dQAlbedo = 0 if in_eclipse else absorptivity * solarFlux * albedo * crossSectionalArea * heightFactor 
+    # There is no albedo when the satellite in is eclipse
     dQSolarRad = 0 if in_eclipse else absorptivity * crossSectionalArea * solarFlux
     dQEmitted = emissivity * stefanBoltzman * surfaceArea * pow(currentTemp, 4)
 
