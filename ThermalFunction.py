@@ -42,8 +42,9 @@ def ThermalFunction(h, r, emissivity, absorptivity, specificHeat, density, start
 
         heightFactor = Rearth / pow(Rearth + h, 2)
 
-        dQAlbedo = absorptivity * solarFlux * albedo * crossSectionalArea * heightFactor
         dQIR = emissivity * Searth * crossSectionalArea * heightFactor
+        # There is no albedo when the satellite in is eclipse  
+        dQAlbedo = 0 if in_eclipse else absorptivity * solarFlux * albedo * crossSectionalArea * heightFactor       
         dQSolarRad = 0 if in_eclipse else absorptivity * crossSectionalArea * solarFlux
         dQEmitted = emissivity * stefanBoltzman * surfaceArea * pow(currentTemp, 4)
 
