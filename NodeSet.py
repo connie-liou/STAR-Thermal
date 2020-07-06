@@ -1,14 +1,15 @@
 import numpy as np
+import Node 
 
 class NodeSet:
     def __init__(self, nodes, radiationViewFactorMatrix, contactConductanceMatrix):
-        self.nodes = nodes
+        self.nodes = nodes #array of Nodes i'm assuming
         self.radiationViewFactorMatrix = radiationViewFactorMatrix
         self.contactConductanceMatrix = contactConductanceMatrix
         self.numNodes = len(nodes)
 
     def getConductionRateMatrix(self):
-        conductionMatrix = np.zeros((numNodes, numNodes))
+        conductionMatrix = np.zeros((self.numNodes, self.numNodes))
         for i in range(self.numNodes):
             for j in range(i):
                 sendNode = self.nodes[i]
@@ -19,7 +20,7 @@ class NodeSet:
                 conductionMatrix[j][i] = -conduction
         return conductionMatrix
 
-def validateRadiationViewFactorMatrix(nodes, radiationViewFactorMatrix):
+def validateRadiationViewFactorMatrix(nodes, radiationViewFactorMatrix): #TODO: Calculate radiation view factors using formulas
     surfaceAreas = list(map(lambda node: node.physicalProperties.surfaceArea, nodes))
     numNodes = len(nodes)
     for i in range(numNodes):
@@ -29,6 +30,7 @@ def validateRadiationViewFactorMatrix(nodes, radiationViewFactorMatrix):
             if (energy1 != energy2):
                 return False
     return True
+
 
 def getConductionRate(sendNode, receiveNode, contactConductance):
     temperatureDifference = sendNode.temperature - receiveNode.temperature
