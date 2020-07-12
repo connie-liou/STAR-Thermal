@@ -28,7 +28,7 @@ class NodeSet:
         self, nodeIndex: int
     ) -> np.array:
         node = self.nodes[nodeIndex]
-        result = np.zeros((1, self.numNodes))
+        result = np.zeros(self.numNodes)
         result[nodeIndex] = -1 / node.getSurfaceResistance()
         for j in range(self.numNodes):
             spaceResistance = self.getSpaceResistance(nodeIndex, j)
@@ -46,15 +46,15 @@ class NodeSet:
 
     def _getRadiationHeatTransferSystemDependentVariables(self) -> np.array:
         return np.array(
-            map(_getRadiationHeatTransferSystemDependentVariable, self.nodes)
+            list(map(_getRadiationHeatTransferSystemDependentVariable, self.nodes))
         )
 
-    def getRadiationHeatTransferRates(self) -> np.array:
+    def getRadiationHeatTransferRates(self) -> np.ndarray:
         coefficients = self._getRadiationHeatTransferSystemCoefficients()
         dependentVariables = self._getRadiationHeatTransferSystemDependentVariables()
         return np.linalg.solve(coefficients, dependentVariables)
 
-    def getConductionRateMatrix(self) -> np.ndarray:
+    def getConductionHeatTransferRateMatrix(self) -> np.ndarray:
         conductionMatrix = np.zeros((self.numNodes, self.numNodes))
         for i in range(self.numNodes):
             for j in range(i):

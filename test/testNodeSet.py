@@ -27,11 +27,89 @@ nodeSet = NodeSet(nodeList, radiationViewFactorsMatrix, contactConductanceMatrix
 
 
 class TestNodeSet(unittest.TestCase):
-    def testConductionRateMatrix(self) -> None:
+    def testConductionHeatTransferRateMatrix(self) -> None:
         expected = np.array([[0, 80], [-80, 0]])
-        actual = nodeSet.getConductionRateMatrix()
+        actual = nodeSet.getConductionHeatTransferRateMatrix()
+        self.assertTrue(np.array_equal(expected, actual))
+
+    def testSpaceResistance(self) -> None:
+        expected = 1 / (3 * 0.2)
+        actual = nodeSet.getSpaceResistance(0, 1)
+        self.assertEqual(expected, actual)
+
+    def testRadiationHeatTransferSystemCoefficientsSingleNode0(self) -> None:
+        expected = np.array(
+            [
+                -1 / node0.getSurfaceResistance()
+                - 1 / nodeSet.getSpaceResistance(0, 1),
+                1 / nodeSet.getSpaceResistance(0, 1),
+            ]
+        )
+        actual = nodeSet._getRadiationHeatTransferSystemCoefficientsSingleNode(0)
+        print("EXPECTED")
+        print(expected)
+        print("ACTUAL")
         print(actual)
-        self.assertTrue(np.array_equal(expected, nodeSet.getConductionRateMatrix()))
+        self.assertTrue(np.array_equal(expected, actual))
+
+    def testRadiationHeatTransferSystemCoefficientsSingleNode1(self) -> None:
+        expected = np.array(
+            [
+                1 / nodeSet.getSpaceResistance(1, 0),
+                -1 / node1.getSurfaceResistance()
+                - 1 / nodeSet.getSpaceResistance(1, 0),
+            ]
+        )
+        actual = nodeSet._getRadiationHeatTransferSystemCoefficientsSingleNode(1)
+        print("EXPECTED")
+        print(expected)
+        print("ACTUAL")
+        print(actual)
+        self.assertTrue(np.array_equal(expected, actual))
+
+    def testRadiationHeatTransferSystemCoefficients(self) -> None:
+        expected = np.array(
+            [
+                [
+                    -1 / node0.getSurfaceResistance()
+                    - 1 / nodeSet.getSpaceResistance(0, 1),
+                    1 / nodeSet.getSpaceResistance(0, 1),
+                ],
+                [
+                    1 / nodeSet.getSpaceResistance(1, 0),
+                    -1 / node1.getSurfaceResistance()
+                    - 1 / nodeSet.getSpaceResistance(1, 0),
+                ],
+            ]
+        )
+        actual = nodeSet._getRadiationHeatTransferSystemCoefficients()
+        print("EXPECTED")
+        print(expected)
+        print("ACTUAL")
+        print(actual)
+        self.assertTrue(np.array_equal(expected, actual))
+
+    def testRadiationHeatTransferSystemDependentVariables(self) -> None:
+        power0 = node0.getBlackbodyEmissivePower()
+        resistance0 = node0.getSurfaceResistance()
+        power1 = node1.getBlackbodyEmissivePower()
+        resistance1 = node1.getSurfaceResistance()
+        expected = np.array([-power0 / resistance0, -power1 / resistance1])
+        actual = nodeSet._getRadiationHeatTransferSystemDependentVariables()
+        print("EXPECTED")
+        print(expected)
+        print("ACTUAL")
+        print(actual)
+        self.assertTrue(np.array_equal(actual, expected))
+
+    def testRadiationHeatTransferRateMatrix(self) -> None:
+        expected = np.array([357.9338298, 20.14659574])
+        actual = nodeSet.getRadiationHeatTransferRates()
+        print("EXPECTED")
+        print(expected)
+        print("ACTUAL")
+        print(actual)
+        self.assertTrue(np.allclose(expected, actual))
 
 
 if __name__ == "__main__":
