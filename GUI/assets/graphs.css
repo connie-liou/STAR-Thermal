@@ -1,0 +1,54 @@
+#custom-graphs-container{
+    display: flex;
+    float: right;
+    width: 40%;
+    margin: 40px;
+
+}
+
+#graph-custom-tabs{
+    width: 50px !important;
+}
+#graph-custom-tabs .tab{
+    background-color: #262B3D !important;
+    color: #E2EFFA !important;
+    padding: 15px;
+    border-color: #557;
+    display: flex !important;
+    font-size: 13px;
+    flex-direction: row;
+    flex-flow: row wrap;
+    text-align: center;
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    
+    
+}
+
+#graph-custom-tabs > div > span{
+    transform: scale(-1,-1) !important;
+}
+
+
+
+#graph-custom-tabs .tab--selected {
+    border-left: solid 2px #7CD3F7 !important;
+    color: #7CD3F7 !important;
+}
+
+.graph-style{
+    min-height: 50vh;
+    height: 100%;
+    width: 90vw;
+}
+
+
+#graph-tab-container{
+    min-height: 50vh;
+    overflow: auto;
+}
+
+#logo{
+    height: 50px;
+    margin: 10px;
+}
