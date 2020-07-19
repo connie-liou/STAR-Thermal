@@ -14,7 +14,6 @@ class ThermalModel:
         spacecraftConfiguration: SpacecraftConfiguration,
         orbit: Orbit,
         orientation: Orientation,
-        orbitalBody: OrbitalBody,
         solarPosition: SolarPosition,
         nodes: NodeSet,
     ):
@@ -22,7 +21,6 @@ class ThermalModel:
         self.spacecraftConfiguration = SpacecraftConfiguration
         self.orbit = Orbit
         self.orientation = orientation
-        self.orbitalBody = OrbitalBody
         self.solarPosition = SolarPosition
         self.nodes = NodeSet
 
