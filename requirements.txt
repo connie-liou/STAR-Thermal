@@ -21,4 +21,4 @@ six==1.13.0
 Werkzeug==0.16.0
 XlsxWriter==1.2.6
 dash-bootstrap-components==0.7.2
-waitress==1.4.0
+waitress==1.4.3
