@@ -25,6 +25,17 @@ class TestOrbit(unittest.TestCase):
         expected = (EARTH_RADIUS + maxAltitude) / (1 + eccentricity)
         self.assertAlmostEqual(expected, semiMajorAxis)
 
+    def testEccentricAnomallyCoefficient(self) -> None:
+        coefficient = orbit._getEccentricAnomalyCoefficient()
+        expected = 868.824265503542
+        self.assertAlmostEqual(expected, coefficient)
+
+    def testEccentricAnomally(self) -> None:
+        time = 1.4
+        expected = 0.0017904
+        eccentricAnomaly = orbit.getEccentricAnomaly(time)
+        self.assertAlmostEqual(expected, eccentricAnomaly)
+
 
 if __name__ == "__main__":
     unittest.main()
