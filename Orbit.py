@@ -23,6 +23,9 @@ class Orbit:
         self.orbitalBody = orbitalBody
         self.semiMajorAxis = _getSemiMajorAxis(self)
 
+    def _getEccentricAnomalyCoefficient(self) -> float:
+        return sqrt(pow(self.semiMajorAxis, 3) / self.orbitalBody.gravitationalParamter)
+
     def getEccentricAnomaly(self, time: float) -> float:
         return _getEccentricAnomaly(self, time)
 
@@ -32,11 +35,12 @@ def _getSemiMajorAxis(orbit: Orbit) -> float:
 
 
 def _getEccentricAnomaly(orbit: Orbit, time: float) -> float:
-    coefficient = sqrt(
-        pow(orbit.semiMajorAxis, 3) / orbit.orbitalBody.gravitationalParamter
-    )
-    function = lambda E: coefficient * (E - orbit.eccentricity * sin(E)) - time
+    coefficient = orbit._getEccentricAnomalyCoefficient()
+
+    def _eccentricAnomalyAndTimeFunction(E: float) -> float:
+        return coefficient * (E - orbit.eccentricity * sin(E)) - time
+
     # The estimated root is obtained by using the approximation sin(E) ~ E.
     estimatedRoot = time / (coefficient * (1 - orbit.eccentricity))
-    root: float = fsolve(function, estimatedRoot)[0]
+    root: float = fsolve(_eccentricAnomalyAndTimeFunction, estimatedRoot)[0]
     return root
