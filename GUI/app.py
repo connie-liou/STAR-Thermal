@@ -37,84 +37,35 @@ if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
 layout(app)
 #CallBacks #####################################################################################################
-
-@app.callback([Output('complex-solar-container', 'style'), Output('simple-solar-container', 'style')], [Input('use-simple-solar', 'value')])
-def showSolar(useSimpleSolar):
-    if (useSimpleSolar == 'Simple'):
-        return {'display': 'none'}, {'display': 'flex'}
-    else:
-        return {'display': ''}, {'display': 'none'}
-
-@app.callback([Output('load-table-container', 'style'), Output('constant-load-container','style')], [Input('use-constant-load', 'value')])
-def loadDisplay(useLoad):
-    if (useLoad == 'constant'):
-        return {'display': 'none'}, {'display': 'block'}
-    else:
-        return {'display': 'block'}, {'display': 'none'}
-
-@app.callback([Output('spinner-inputs', 'style'), Output('use-sunangles','options'), Output('use-sunangles', 'value'), Output('Solar-Table', 'style_data_conditional')], [Input('use-spinner', 'value')])
-def spinner(useSpinner):
-    if (useSpinner == 'Yes'):
-        options=[{'label': 'Yes', 'value': 'Yes', 'disabled':True},
-                 {'label': 'No', 'value': 'No', 'disabled':True}]
-        styleDataCond = [{'if': {'column_id': str(x)},
-                        'backgroundColor': '#464646'} for x in ['roll','pitch']]
-        return {'display': 'flex'}, options, 'No', styleDataCond
-    else:
-        options=[{'label': 'Yes', 'value': 'Yes'},
-                 {'label': 'No', 'value': 'No'}]
-        return {'display': 'none'}, options, 'No', None
-
-@app.callback([Output('EOL-table-container', 'style'), Output('num-EOL', 'disabled')], [Input('use-EOL', 'value')])
-def useEOLFact(useEOL):
-    if useEOL == 'Yes':
-        return [{'display':'block'}, False]
-    else:
-        return [{'display':'none'}, True]
-@app.callback( 
-    [Output(component_id='sun-angle-table-container', component_property='style'),
-    Output(component_id='time-sun-angle-table-container', component_property='style'),
-    Output(component_id='LEO-orbit-container', component_property='style'),
-    Output(component_id='constant-orbit-container', component_property='style')],
-    [Input('orbit-type', 'value'), Input('use-sunangles', 'value')])
-def change_orbit(orbit, useSunAngles):
-    if (orbit == 'L1' or orbit == 'L2'):
-        if (useSunAngles == 'Yes'):
-            return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'flex'}
-        else:
-            return {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {'display': 'flex'}
-    else: #LEO
-        if(useSunAngles == 'Yes'):
-            return {'display': 'block'}, {'display': 'none'}, {'display': 'flex'}, {'display': 'none'}
-        else:
-            return {'display': 'none'}, {'display': 'none'}, {'display': 'flex'}, {'display': 'none'}
-
-@app.callback( #checks if rows and num sides are same, chaining inputs for import func
-    [Output('num-sides','value')],
-    [Input('Solar-Table', 'data')],
-    [State('num-sides','value')])
-def update_numSides_val(rows, numSides):
-    if len(rows) != numSides:
-        return [len(rows)]
-    else:
-        raise PreventUpdate
-
-@app.callback( #checks if rows and num sides are same, chaining inputs for import func
-    [Output('num-EOL','value')],
-    [Input('Solar-Table-EOL', 'data')],
-    [State('num-EOL','value')])
-def update_numEOL_val(rows, numSides):
-    if len(rows) != numSides:
-        return [len(rows)]
-    else:
-        raise PreventUpdate
-#determines power topology
-@app.callback([Output('efficiency','disabled')],[Input('power-reg-type','value')])
-def update_efficiency(regType):
-    if regType =='DET':
-        return [True]
-    else: 
-        return [False]
+@app.callback([Output('node-table', 'columns'), Output('radiation-table', 'columns'), Output('radiation-table','data'), Output('conductance-table', 'columns'), Output('conductance-table', 'data')], 
+            [Input('num-nodes', 'value')], 
+            [State('node-table','columns'), State('radiation-table', 'columns'), State('radiation-table','data'), State('conductance-table', 'columns'), State('conductance-table', 'data')])
+def addNodes(numNodes, nodeCols, radCols, radRows, condCols, condRows):
+    
+    if numNodes >= len(nodeCols):
+        extra = numNodes - len(nodeCols) + 1
+        for i in range (extra):
+            nodeCols.append({
+                        'id': ('node-'+str(len(nodeCols))), 'name': ('Node '+str(len(nodeCols))),
+                        'renamable': True, 'deletable': False, 'editable':True
+                        })
+            radCols.append({
+                        'id': ('radiation-'+str(len(nodeCols)-1)), 'name': ('Surface '+str(len(nodeCols)-1)),
+                        'renamable': True, 'deletable': False, 'editable':True
+                        })
+            radRows.append({'surface-number':('Surface ' + str(len(nodeCols)-1))})
+            condCols.append({
+                        'id': ('conductance-'+str(len(nodeCols)-1)), 'name': ('Surface '+str(len(nodeCols)-1)),
+                        'renamable': True, 'deletable': False, 'editable':True
+                        })
+            condRows.append({'surface-conductance-number':('Surface ' + str(len(nodeCols)-1))})
+    elif numNodes < len(nodeCols)-1:
+        nodeCols.pop()
+        radCols.pop()
+        radRows.pop()
+        condCols.pop()
+        condRows.pop()
+    return [nodeCols, radCols, radRows, condCols, condRows]
 
 @app.callback(Output('confirm-zerodivision-error', 'displayed'), [Input('confirm-zerodivision-error', 'message')], [State('run_button', 'n_clicks'), State('prev_clicks_run', 'children')])
 def display_confirm(value, clicks, prevClicks):
@@ -143,4 +94,4 @@ def hideTabs (hideClicks, showClicks):
 
 popupCallbacks(app)
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0',debug=False, port=8050)
+    app.run_server(debug=True, port=8050)

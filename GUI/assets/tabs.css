@@ -166,14 +166,13 @@
     margin: 5px !important;
 }
 
-.table{
-    color: #000000;
-}
+
 
 .table-container{
     padding: 20px;
     float: center;
 }
+
 
 .description-text{
     font-size: 13px !important;
@@ -244,7 +243,7 @@
     width: 300px;
 }
 
-input:invalid {
+/* input:invalid {
     border-color: #dc3545;
     border-width: 3px;
     padding-right: calc(1.5em + 0.75rem);
@@ -259,7 +258,7 @@ input:disabled{
     background-color: rgb(177, 177, 177) !important;
     border-color: grey !important;
     cursor: not-allowed;
-  }
+  } */
 
 .export-tab-style{
     justify-content: space-between;

@@ -203,46 +203,64 @@ def layout(app):
             html.Div([  # tabs
                 dcc.Tabs(id="custom-tabs", children=[
                     #######################################################################################################
-                    dcc.Tab(label='General', children=[
+                    dcc.Tab(label='Nodes', children=[
                         html.Div([
-                            html.Div([html.H6("Select Power Topology"),],),
+                            html.Div([html.H6("Input nodes"),],),
+                            html.Div([daq.NumericInput(
+                                        id='num-nodes',
+                                        label='Number of Nodes',
+                                        labelPosition='top',
+                                        max=100,
+                                        min=1,
+                                        value=2,
+                                    ),
+                                    ]),
+                            
                             html.Div([
-                                html.Div([
-                                    dcc.RadioItems(
-                                        id='power-reg-type',
-                                        options=[{'label': 'PPT', 'value': 'PPT'}, {'label': 'DET', 'value': 'DET'}],
-                                        className='save-dropdown',
-                                        value='DET'
-                                    )
-                                ]),
-                                html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("PPT Efficiency(%)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 100, 
-                                                step = 0.0001, 
-                                                disabled = True, 
-                                                id = 'efficiency',
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ])
-                            ], className='save-container'),
-                            html.Hr(),
-                            html.H6('Use Spinner Model?'),
-                            html.Div([
-                                dcc.RadioItems(
-                                    options=[
-                                        {'label': 'Yes', 'value': 'Yes'},
-                                        {'label': 'No', 'value': 'No'}
-                                    ],
-                                    value='No',
-                                    id='use-spinner'
-                                ),
-                            ], className='save-container'),
+                                dash_table.DataTable(
+                                    id = 'node-table',
+                                    columns=[{
+                                            'name': 'Node',
+                                            'id': 'node-column',
+                                            'deletable': False,
+                                            'renamable': False,
+                                            'clearable': False
+                                        }, {
+                                            'name': 'Node 1',
+                                            'id': 'node-1',
+                                            'type': 'numeric',
+                                            'deletable': False,
+                                            'renamable': False,
+                                            'clearable': True
+                                        }, {
+                                            'name': 'Node 2',
+                                            'id': 'node-2',
+                                            'type': 'numeric',
+                                            'deletable': False,
+                                            'renamable': False,
+                                            'clearable': True
+                                        }],
+                                        data=[
+                                            {'node-column':'Name'},
+                                            {'node-column':'Initial Temp (K)'},
+                                            {'node-column':'Surface Area (m^2)'},
+                                            {'node-column':'Thickness(m)'},
+                                            {'node-column':'Density(kg/m^3)'},
+                                            {'node-column':'Specific Heat(J/kg/K)'},
+                                            {'node-column':'absorptivity'},
+                                            {'node-column':'emissivity'},],
+                                        editable=True,
+                                        row_deletable=False,
+                                        export_headers='display',
+                                        style_cell={
+                                            'color': 'black',
+                                            'whiteSpace': 'normal',
+                                            'height': 'auto',
+                                            'maxWidth': 50,
+                                        }
+                                )
+                                ], className='table-container', id='node-table-container'),
+                            
                             html.Hr(),
                             html.Div([
                                 html.P("Click for detailed help"),
@@ -251,284 +269,94 @@ def layout(app):
                         ], className='tab-container')
                     ], className='custom-tab')
                     ######################################################################################################################3
-                    , dcc.Tab(label='Battery', children=[
+                    , dcc.Tab(label='Radiation', children=[
                         html.Div([
-                            html.Div([
-                                html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Initial SOC (%)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 100, 
-                                                step=0.0001,
-                                                id = 'initial-soc',
-                                                value=90,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                                html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Capacity (AHr)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                max=10000000000,
-                                                min=0, 
-                                                step=0.0001,
-                                                id = 'capacity',
-                                                value=1000,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                                html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Cells in Series"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                max=10000000000,
-                                                min=0, 
-                                                step=1,
-                                                id = 'num-cells',
-                                                value=8,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                            ], className='save-container', id = 'battery-input-row'),
-                            html.Div([  # input container
-                                html.Div([
-                                    html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Max Charging Current"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                max=10000000000,
-                                                min=0, 
-                                                step=0.0001,
-                                                id = 'max-current',
-                                                value=40,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                    ]),
-                                    html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Int. Resistance (Chg)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                max=10000000000,
-                                                min=0, 
-                                                step=0.0001,
-                                                id = 'int-resistance-chg',
-                                                value=0.01,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                    ]),
-                                    dash_table.DataTable(
-                                        id='battery-charging-table', style_table={
-                                            'height': '300px',
-                                            'overflowY': 'scroll',
-                                            'border': 'thin lightgrey solid'
+                            html.H6('Radiation View Factors'),
+                            dash_table.DataTable(
+                                id = 'radiation-table',
+                                    columns=[
+                                        {"name": "Surface #", "id": "surface-number"},
+                                        {
+                                            'name': 'Surface 1',
+                                            'id': 'radiation-1',
+                                            'type': 'numeric',
+                                            'deletable': False,
+                                            'renamable': False,
+                                            'clearable': True
                                         },
-                                        columns=[{
-                                            'name': 'Charging SOC',
-                                            'id': 'cSOC',
+                                        {
+                                            'name': 'Surface 2',
+                                            'id': 'radiation-2',
                                             'type': 'numeric',
                                             'deletable': False,
                                             'renamable': False,
                                             'clearable': True
-                                        }, {
-                                            'name': 'Charging V',
-                                            'id': 'cV',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }
-                                        ],
+                                        },
+                                    ],
                                         data=[
-                                            {'cSOC': 0,
-                                             'cV': 0}
-                                        ],
+                                            {'surface-number': 'Surface'+ str(i + 1)} for i in range(2)
+                                            ],
+                                        merge_duplicate_headers=True,
                                         editable=True,
                                         row_deletable=False,
+                                        export_headers='display',
                                         style_cell={
                                             'color': 'black',
                                             'whiteSpace': 'normal',
                                             'height': 'auto',
                                             'maxWidth': 50,
                                         }
-                                    )
-                                ], className='input-container-l'),  # left input container
-                                html.Div([
-                                    html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Max Charging Voltage"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 100000000, 
-                                                step=0.0001,
-                                                id = 'max-voltage',
-                                                value=33.6,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                                    html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Int. Resistance (Dischg)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 10000000, 
-                                                step=0.0001,
-                                                id = 'int-resistance-dchg',
-                                                value=0.01,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                                    dash_table.DataTable(
-                                        id='battery-discharging-table', style_table={
-                                            'height': '300px',
-                                            'overflowY': 'scroll',
-                                            'border': 'thin lightgrey solid'
-                                        },
-                                        columns=[{
-                                            'name': 'Discharging SOC',
-                                            'id': 'dSOC',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Discharging V',
-                                            'id': 'dV',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }
-                                        ],
-                                        data=[
-                                            {'dSOC': 0,
-                                             'dV': 0}
-                                        ],
-                                        editable=True,
-                                        row_deletable=False,
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        }
-                                    )
-                                ], className='input-container-r')  # right input container
-                            ], className='input-container'),
-                            html.Hr(),
-                            html.Div([
-                                html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='battery-help-button'),
-                            ], className='help-button-container')
-                        ], className='tab-container')
+                                )
+                            
+                        ], id = 'radiation-table-container',className='tab-container'),
+                        html.Hr(),
+                        html.Div([
+                            html.P("Click for detailed help"),
+                            html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='battery-help-button'),
+                        ], className='help-button-container')
                     ], className='custom-tab')
                     ##################################################################################################
-                    , dcc.Tab(label='Load', children=[
+                    , dcc.Tab(label='Conductance', children=[
                         html.Div([
                             html.Div([
-                                html.Div([
-                                    html.P('Load Input', style={'font-size': '13px'}),
-                                    dcc.RadioItems(
-                                        options=[
-                                            {'label': 'Constant Load', 'value': 'constant'},
-                                            {'label': 'Custom Load Profile', 'value': 'custom'},
-                                            {'label': 'Custom Periodic Load Profile', 'value': 'custom-orbit'}
+                                html.H6('Conductance between nodes'),
+                                dash_table.DataTable(
+                                    id = 'conductance-table',
+                                        columns=[
+                                            {"name": "Surface #", "id": 'surface-conductance-number'},
+                                            {
+                                                'name': 'Surface 1',
+                                                'id': 'conductance-1',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
+                                            },
+                                            {
+                                                'name': 'Surface 2',
+                                                'id': 'conductance-2',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
+                                            },
                                         ],
-                                        value='custom',
-                                        id='use-constant-load'
-                                    ),
-                                ]),
-                                html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Line Drop (V)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 100000, 
-                                                step=0.0001,
-                                                id = 'line-drop-load',
-                                                value=0,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                            ], className='save-container')  # input container
-                            , html.Div([dash_table.DataTable(
-                                id='load-table', style_table={
-                                    'height': '300px',
-                                    'overflowY': 'scroll',
-                                    'border': 'thin lightgrey solid'
-                                },
-                                columns=[{
-                                    'name': 'Time (mins)',
-                                    'id': 'time',
-                                    'type': 'numeric',
-                                    'deletable': False,
-                                    'renamable': False,
-                                    'clearable': True
-                                }, {
-                                    'name': 'Load Power',
-                                    'id': 'Load',
-                                    'type': 'numeric',
-                                    'deletable': False,
-                                    'renamable': False,
-                                    'clearable': True
-                                }
-                                ],
-                                data=[
-                                    {'time': 0,
-                                     'Load': 0}
-                                ],
-                                editable=True,
-                                row_deletable=True,
-                                export_headers='display',
-                                style_cell={
-                                    'color': 'black',
-                                    'whiteSpace': 'normal',
-                                    'height': 'auto',
-                                    'maxWidth': 50,
-                                }
-                            )
-                            ], id='load-table-container', className='table-container'),
-                            html.Div([
-                                html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Load Power (W)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 10000000, 
-                                                step=0.0001,
-                                                id = 'constant-load',
-                                                value=1000,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                            ], id='constant-load-container'),
+                                            data=[
+                                                {'surface-conductance-number': 'Surface'+ str(i + 1)} for i in range(2)
+                                                ],
+                                            merge_duplicate_headers=True,
+                                            editable=True,
+                                            row_deletable=False,
+                                            export_headers='display',
+                                            style_cell={
+                                                'color': 'black',
+                                                'whiteSpace': 'normal',
+                                                'height': 'auto',
+                                                'maxWidth': 50,
+                                            }
+                                    )
+                            
+                            ], id = 'conductance-table-container'),
                             html.Hr(),
                             html.Div([
                                 html.P("Click for detailed help"),
@@ -672,7 +500,7 @@ def layout(app):
 
                     ], className='custom-tab')
                     #####################################################################################################################
-                    , dcc.Tab(label='Solar Array', children=[
+                    , dcc.Tab(label='umm', children=[
                         
                             html.Div([
                                 html.Div([
@@ -997,7 +825,6 @@ def layout(app):
                                         id='sun-angle-table', style_table={
                                             'height': '300px',
                                             'overflowY': 'scroll',
-                                            'border': 'thin lightgrey solid'
                                         },
                                         columns=[{
                                             'name': 'Orbit Angles',
@@ -1048,7 +875,6 @@ def layout(app):
                                         id='time-sun-angle-table', style_table={
                                             'height': '300px',
                                             'overflowY': 'scroll',
-                                            'border': 'thin lightgrey solid'
                                         },
                                         columns=[{
                                             'name': 'Time',
@@ -1117,45 +943,7 @@ def layout(app):
                         ], className='tab-container')
                     ], className='custom-tab')
                     ######################################################################################################################
-                    , dcc.Tab(label='Export', children=[
-                        html.Div([                     
-                            html.Div(children=[], id = 'export-error-container'),
-                              # input container
-                            html.H6("Export options"),
-                            html.Div([
-                                html.Div([
-                                    html.P("System name: "),
-                                    html.P("Battery name: "),
-                                    html.P("Load name: "),
-                                    html.P("Orbit name: "),
-                                    html.P("Solar name: "),
-                                ], id = 'export-labels'),
-                                html.Div([
-                                    dcc.Input(id='system-filename', placeholder='Name', type="text"),
-                                    dcc.Input(id='battery-filename', placeholder='Name', type="text"),
-                                    dcc.Input(id='load-filename', placeholder='Name', type="text"),
-                                    dcc.Input(id='orbit-filename', placeholder='Name', type="text"),
-                                    dcc.Input(id='solar-filename', placeholder='Name', type="text")
-                                ], id = 'export-inputs'),
-                                html.Div([
-                                    html.Div(id='system-export-container'),
-                                    html.Div(id='battery-export-container'),
-                                    html.Div(id='load-export-container'),
-                                    html.Div(id='orbit-export-container'),
-                                    html.Div(id='solar-export-container'),
-                                ], id = 'export-buttons'),
-                            ], className = 'export-tab-style'),
-                                 
-                            html.Div([], className='save-container', id='raw_data_container'),
-                            html.Hr(),
-                            html.Div([
-                                html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='export-help-button'),
-                            ], className='help-button-container')
-                        ], className='tab-container')
-                    ], className='custom-tab')
-                    ######################################################################################################################
-                ])
+                    ])
             ], className='pretty_container', id='all-tab-container'),
 
             # graphs
@@ -1166,9 +954,7 @@ def layout(app):
                             dcc.Graph(
                                 id='battery_graph', className='graph-style', 
                                 figure={
-                                    'data': [
-                                        bV, SOC, current, ahrChange
-                                    ],
+                                    'data': [],
                                     'layout': go.Layout(
                                         title='Battery Voltage & SOC',
                                         autosize=True,
@@ -1227,9 +1013,7 @@ def layout(app):
                             dcc.Graph(
                                 id='load_graph', className='graph-style', 
                                 figure={
-                                    'data': [
-                                        power, lc, lv
-                                    ],
+                                    'data': [],
                                     'layout': go.Layout(
                                         title='Load Profile',
                                         legend_orientation='h',
@@ -1277,9 +1061,7 @@ def layout(app):
                             dcc.Graph(
                                 id='solar_graph', className='graph-style',
                                 figure={
-                                    'data': [
-                                    sV, sP, sI
-                                ],
+                                    'data': [],
                                 'layout': go.Layout(
                                     title='Solar Array Profile',
                                     legend_orientation='h',
@@ -1327,7 +1109,7 @@ def layout(app):
                                 id='solarIV_graph',
                                 className='graph-style',
                                 figure={
-                        'data': [solarAP, solarAI],
+                        'data': [],
                         'layout': go.Layout(
                             title='Solar IV',
                             legend_orientation='h',
@@ -1364,9 +1146,7 @@ def layout(app):
                     dcc.Graph(
                         id='system_graph', className='graph-style',
                         style = {'width': '100%'},
-                        figure={'data': [
-            bV, SOC, current, sP, sI, sV, power, lc, lv
-        ],
+                        figure={'data': [],
         'layout': go.Layout(
             title='Overall System',
             legend_orientation='h',

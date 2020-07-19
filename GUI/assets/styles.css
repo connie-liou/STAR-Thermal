@@ -199,14 +199,6 @@
   display: hidden;
 }
 
-.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
-    --selected-background: lightgrey !important;
-}
-
-.dash-spreadsheet-container .dash-spreadsheet-inner table{
-  --selected-background: lightgray !important;
-}
-
 #name-container{
   text-align: left !important;
   color: #7cd3f7 !important;
@@ -246,6 +238,7 @@
 #hide-tabs:hover{
   cursor: pointer;
   opacity: 75%;
+
 }
 
 .helpButton:hover{
@@ -270,4 +263,3 @@
   transition: all .2s;
 
 }
-
