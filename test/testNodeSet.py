@@ -37,6 +37,11 @@ class TestNodeSet(unittest.TestCase):
         actual = nodeSet.getSpaceResistance(0, 1)
         self.assertEqual(expected, actual)
 
+    def testConductionHeatTransferRates(self) -> None:
+        expected = np.array([-80, 80])
+        actual = nodeSet.getConductionHeatTransferRates()
+        self.assertTrue(np.array_equal(expected, actual))
+
     def testRadiationHeatTransferSystemCoefficientsSingleNode0(self) -> None:
         """This test assumes that node.getSurfaceResistance and
         nodeSet.getSpaceResistance work properly.    

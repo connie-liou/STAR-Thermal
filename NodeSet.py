@@ -68,6 +68,9 @@ class NodeSet:
                 conductionMatrix[j][i] = -conduction
         return conductionMatrix
 
+    def getConductionHeatTransferRates(self) -> np.array:
+        return self.getConductionHeatTransferRateMatrix().sum(axis=0)
+
 
 def validateRadiationViewFactorMatrix(
     nodes: List[Node], radiationViewFactorMatrix: np.ndarray
