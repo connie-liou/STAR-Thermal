@@ -1,8 +1,9 @@
-from math import sin, sqrt
-
+import numpy as np
+from math import sin, sqrt, cos
 from scipy.optimize import fsolve
-
 from OrbitalBody import OrbitalBody
+from PerifocalCoordinates import PerifocalCoordinates
+from GeocentricEquatorialCoordinates import GeocentricEquatorialCoordinates
 
 
 class Orbit:
@@ -22,12 +23,59 @@ class Orbit:
         self.eccentricity = eccentricity
         self.orbitalBody = orbitalBody
         self.semiMajorAxis = _getSemiMajorAxis(self)
+        self.transformationMatrix = self._getTransformationMatrix()
 
     def _getEccentricAnomalyCoefficient(self) -> float:
         return sqrt(pow(self.semiMajorAxis, 3) / self.orbitalBody.gravitationalParamter)
 
     def getEccentricAnomaly(self, time: float) -> float:
         return _getEccentricAnomaly(self, time)
+
+    def getTrueAnomaly(self, eccentricAnomaly: float) -> float:
+        pass  # TODO implement this
+
+    def getDistanceFromOrbitalBody(self, time: float) -> float:
+        eccentricAnomaly = self.getEccentricAnomaly(time)
+        return self.semiMajorAxis * (1 - self.eccentricity * cos(eccentricAnomaly))
+
+    def getPerifocalCoordinates(
+        self, distance: float, trueAnomaly: float
+    ) -> PerifocalCoordinates:
+        return PerifocalCoordinates(
+            distance * cos(trueAnomaly), distance * sin(trueAnomaly), 0
+        )
+
+    def _getTransformationMatrix(self) -> np.ndarray:
+        """This matrix is used to convert Perifocal Coordinates to 
+        Geocentric-Equatorial Coordinates.
+        """
+        omega = self.rightAscensionOfAscendingNode
+        i = self.inclination
+        w = self.argumentOfPeriapsis
+        return np.array(
+            [
+                [
+                    cos(omega) * cos(w) - sin(omega) * sin(w) * cos(i),
+                    -cos(omega) * cos(w) - sin(omega) * cos(w) * cos(i),
+                    sin(omega) * sin(i),
+                ],
+                [
+                    sin(omega) * cos(w) + cos(omega) * sin(w) * cos(i),
+                    -sin(omega) * sin(w) + cos(omega) * cos(w) * cos(i),
+                    -cos(omega) * sin(i),
+                ],
+                [sin(omega) * sin(i), cos(omega) * sin(i), cos(i)],
+            ]
+        )
+
+        def getGeocentricEquatorialCoordinates(self) -> GeocentricEquatorialCoordinates:
+            vectorResult = np.matmul(
+                self.transformationMatrix,
+                self.getPerifocalCoordinates().getCoordinateVector(),
+            )
+            return GeocentricEquatorialCoordinates(
+                vectorResult[0], vectorResult[1], vectorResult[2]
+            )
 
 
 def _getSemiMajorAxis(orbit: Orbit) -> float:
