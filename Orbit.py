@@ -1,7 +1,9 @@
 import numpy as np
+
 from math import sin, sqrt, cos
 from scipy.optimize import fsolve
 from OrbitalBody import OrbitalBody
+
 from PerifocalCoordinates import PerifocalCoordinates
 from GeocentricEquatorialCoordinates import GeocentricEquatorialCoordinates
 
@@ -34,8 +36,7 @@ class Orbit:
     def getTrueAnomaly(self, eccentricAnomaly: float) -> float:
         pass  # TODO implement this
 
-    def getDistanceFromOrbitalBody(self, time: float) -> float:
-        eccentricAnomaly = self.getEccentricAnomaly(time)
+    def getDistanceFromOrbitalBody(self, eccentricAnomaly: float) -> float:
         return self.semiMajorAxis * (1 - self.eccentricity * cos(eccentricAnomaly))
 
     def getPerifocalCoordinates(
