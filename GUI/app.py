@@ -31,10 +31,6 @@ app = dash.Dash(__name__, assets_folder=find_data_file('assets/'), server=server
 
 app.title = 'EPS Design Tool'
 
-UPLOAD_DIRECTORY = "/project/api_uploaded_files"
-
-if not os.path.exists(UPLOAD_DIRECTORY):
-    os.makedirs(UPLOAD_DIRECTORY)
 layout(app)
 #CallBacks #####################################################################################################
 @app.callback([Output('node-table', 'columns'), Output('radiation-table', 'columns'), Output('radiation-table','data'), Output('conductance-table', 'columns'), Output('conductance-table', 'data')], 

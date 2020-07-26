@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 .vscode
 .idea/inspectionProfiles/profiles_settings.xml
 *.xml
-=======
 __pycache__
 *.pyc
 *.cpython
@@ -10,4 +8,5 @@ __pycache__
 notes
 .ropeproject
 env
->>>>>>> 1d937b80e11b3e89b379fdf4746418f4b90ff0aa
+.vscode
+.idea
