@@ -5,3 +5,5 @@ __pycache__
 notes
 .ropeproject
 env
+.vscode
+.idea
