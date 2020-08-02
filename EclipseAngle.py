@@ -17,11 +17,11 @@ Rs = np.linalg.norm(SunPosition)
 print('Rs', Rs)
 
 #calculate the two angles that define the transition point from sun to shade
-angle1 = Re/Rsc
-angle2 = Re/Rs
+input1 = Re/Rsc
+input2 = Re/Rs
 
-theta1 = math.acos(angle1)
-theta2 = math.acos(angle2)
+theta1 = math.acos(input1)
+theta2 = math.acos(input2)
 
 thetaTotal = theta1 + theta2
 
