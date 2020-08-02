@@ -1,8 +1,8 @@
 import unittest
 
-from constants import EARTH_RADIUS
-from Orbit import Orbit
-from OrbitalBody import EARTH_ORBITAL_BODY
+from model.constants import EARTH_RADIUS
+from model.components.orbit import Orbit
+from model.components.orbitalBody import EARTH_ORBITAL_BODY
 
 inclination = 0.5
 rightAscension = 0.75

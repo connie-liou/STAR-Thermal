@@ -1,8 +1,9 @@
 import unittest
 
-from Node import Node
-from OpticalProperties import OpticalProperties
-from PhysicalProperties import PhysicalProperties
+import model as m
+from model.components.node import Node
+from model.components.opticalProperties import OpticalProperties
+from model.components.physicalProperties import PhysicalProperties
 
 startTemperature = 300
 physicalProperties = PhysicalProperties(3, 4, 5, 6)
