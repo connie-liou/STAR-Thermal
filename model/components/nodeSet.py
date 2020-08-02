@@ -2,7 +2,7 @@ from typing import List
 
 import numpy as np
 
-from Node import Node
+from model.components.node import Node
 
 
 # TODO: Calculate radiation view factors using formulas

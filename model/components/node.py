@@ -1,8 +1,8 @@
 import numpy as np
 
-from constants import STEFAN_BOLTZMAN
-from OpticalProperties import OpticalProperties
-from PhysicalProperties import PhysicalProperties
+from model.constants import STEFAN_BOLTZMAN
+from model.components.opticalProperties import OpticalProperties
+from model.components.physicalProperties import PhysicalProperties
 
 
 class Node:

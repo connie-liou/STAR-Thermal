@@ -1,16 +1,16 @@
-from NodeSet import NodeSet
-from Orbit import Orbit
-from OrbitalBody import OrbitalBody
-from Orientation import Orientation
-from SolarPosition import SolarPosition
-from SpacecraftConfiguration import SpacecraftConfiguration
-from TimeConfiguration import TimeConfiguration
+from model.components.nodeSet import NodeSet
+from model.components.orbit import Orbit
+from model.components.orbitalBody import OrbitalBody
+from model.components.orientation import Orientation
+from model.components.solarPosition import SolarPosition
+from model.components.spacecraftConfiguration import SpacecraftConfiguration
+from model.components.timingConfiguration import TimingConfiguration
 
 
 class ThermalModel:
     def __init__(
         self,
-        timeConfiguration: TimeConfiguration,
+        timeConfiguration: TimingConfiguration,
         spacecraftConfiguration: SpacecraftConfiguration,
         orbit: Orbit,
         orientation: Orientation,

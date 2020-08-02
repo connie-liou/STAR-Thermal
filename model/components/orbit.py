@@ -1,11 +1,13 @@
-import numpy as np
-
 from math import sin, sqrt, cos
-from scipy.optimize import fsolve
-from OrbitalBody import OrbitalBody
 
-from PerifocalCoordinates import PerifocalCoordinates
-from GeocentricEquatorialCoordinates import GeocentricEquatorialCoordinates
+import numpy as np
+from scipy.optimize import fsolve
+
+from model.components.orbitalBody import OrbitalBody
+from model.components.perifocalCoordinates import PerifocalCoordinates
+from model.components.geocentricEquatorialCoordinates import (
+    GeocentricEquatorialCoordinates,
+)
 
 
 class Orbit:
