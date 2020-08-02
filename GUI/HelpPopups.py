@@ -77,18 +77,18 @@ def popupCallbacks(app):
             else:
                 return[{'display':'block',"visibility":'hidden'}]
     
-    @app.callback(
-        [Output('export-help-container', 'style')],
-        [Input('close-export-popup','n_clicks'),Input('export-help-button','n_clicks')]
-    )
-    def open_popup(close, openClicks):
-        if(close is None):
-            close = 0
-        if (openClicks is None):
-            openClicks = 0
+    # @app.callback(
+    #     [Output('export-help-container', 'style')],
+    #     [Input('close-export-popup','n_clicks'),Input('export-help-button','n_clicks')]
+    # )
+    # def open_popup(close, openClicks):
+    #     if(close is None):
+    #         close = 0
+    #     if (openClicks is None):
+    #         openClicks = 0
 
-        if(openClicks > close):
-            return[{"display":'block'}]
-        else:
-            return[{'display':'block',"visibility":'hidden'}]
+    #     if(openClicks > close):
+    #         return[{"display":'block'}]
+    #     else:
+    #         return[{'display':'block',"visibility":'hidden'}]
 
