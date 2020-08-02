@@ -1,12 +1,13 @@
 import math
 
+
 def TrueAnomaly(
         eccentricity,
         eccentricAnomaly,
 ):
-    cosTA = (eccentricity - cos(eccentricAnomaly)) / (eccentricity * cos(eccentricAnomaly) - 1) # eqn 2.25
+    cosTA = (eccentricity - math.cos(eccentricAnomaly)) / (eccentricity * math.cos(eccentricAnomaly) - 1) # eqn 2.25
 
     if eccentricAnomaly <= math.pi: # eqn 2.26
-        trueAnomaly = acos(cosTA)
+        return math.acos(cosTA)
     else:
-        trueAnomaly = 2 * math.pi - acos(cosTA)
+        return 2 * math.pi - math.acos(cosTA)
