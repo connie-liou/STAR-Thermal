@@ -1,6 +1,6 @@
 import unittest
 
-from PhysicalProperties import PhysicalProperties
+from model.components.physicalProperties import PhysicalProperties
 
 
 class TestPhysicalProperties(unittest.TestCase):

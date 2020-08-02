@@ -2,10 +2,10 @@ import unittest
 
 import numpy as np
 
-from Node import Node
-from NodeSet import NodeSet
-from OpticalProperties import OpticalProperties
-from PhysicalProperties import PhysicalProperties
+from model.components.node import Node
+from model.components.nodeSet import NodeSet
+from model.components.opticalProperties import OpticalProperties
+from model.components.physicalProperties import PhysicalProperties
 
 startTemperature0 = 300
 physicalProperties0 = PhysicalProperties(3, 4, 5, 6)

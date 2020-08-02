@@ -1,4 +1,4 @@
-import constants
+import model.constants as constants
 
 
 class OrbitalBody:

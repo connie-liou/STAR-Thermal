@@ -1,11 +1,13 @@
-import numpy as np
-
 from math import sin, sqrt, cos
-from scipy.optimize import fsolve
-from OrbitalBody import OrbitalBody
 
-from PerifocalCoordinates import PerifocalCoordinates
-from GeocentricEquatorialCoordinates import GeocentricEquatorialCoordinates
+import numpy as np
+from scipy.optimize import fsolve
+
+from model.components.orbitalBody import OrbitalBody
+from model.components.perifocalCoordinates import PerifocalCoordinates
+from model.components.geocentricEquatorialCoordinates import (
+    GeocentricEquatorialCoordinates,
+)
 
 
 class Orbit:
@@ -69,14 +71,15 @@ class Orbit:
             ]
         )
 
-        def getGeocentricEquatorialCoordinates(self) -> GeocentricEquatorialCoordinates:
-            vectorResult = np.matmul(
-                self.transformationMatrix,
-                self.getPerifocalCoordinates().getCoordinateVector(),
-            )
-            return GeocentricEquatorialCoordinates(
-                vectorResult[0], vectorResult[1], vectorResult[2]
-            )
+    # TODO fix this
+    def getGeocentricEquatorialCoordinates(self) -> GeocentricEquatorialCoordinates:
+        vectorResult = np.matmul(
+            self.transformationMatrix,
+            self.getPerifocalCoordinates().getCoordinateVector(),
+        )
+        return GeocentricEquatorialCoordinates(
+            vectorResult[0], vectorResult[1], vectorResult[2]
+        )
 
 
 def _getSemiMajorAxis(orbit: Orbit) -> float:

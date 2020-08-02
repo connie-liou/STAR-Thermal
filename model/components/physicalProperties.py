@@ -8,3 +8,4 @@ class PhysicalProperties:
         self.specificHeat = specificHeat
         self.volume = surfaceArea * thickness
         self.mass = self.volume * density
+        self.thermalMass = self.mass * specificHeat

@@ -1,6 +1,6 @@
 import unittest
 
-from OpticalProperties import OpticalProperties
+from model.components.opticalProperties import OpticalProperties
 
 
 class TestOpticalProperties(unittest.TestCase):
