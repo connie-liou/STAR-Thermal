@@ -71,14 +71,15 @@ class Orbit:
             ]
         )
 
-        def getGeocentricEquatorialCoordinates(self) -> GeocentricEquatorialCoordinates:
-            vectorResult = np.matmul(
-                self.transformationMatrix,
-                self.getPerifocalCoordinates().getCoordinateVector(),
-            )
-            return GeocentricEquatorialCoordinates(
-                vectorResult[0], vectorResult[1], vectorResult[2]
-            )
+    # TODO fix this
+    def getGeocentricEquatorialCoordinates(self) -> GeocentricEquatorialCoordinates:
+        vectorResult = np.matmul(
+            self.transformationMatrix,
+            self.getPerifocalCoordinates().getCoordinateVector(),
+        )
+        return GeocentricEquatorialCoordinates(
+            vectorResult[0], vectorResult[1], vectorResult[2]
+        )
 
 
 def _getSemiMajorAxis(orbit: Orbit) -> float:
