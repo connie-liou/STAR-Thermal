@@ -1,6 +1,5 @@
 import unittest
 
-import model as m
 from model.components.node import Node
 from model.components.opticalProperties import OpticalProperties
 from model.components.physicalProperties import PhysicalProperties

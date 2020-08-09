@@ -8,6 +8,5 @@ __pycache__
 notes
 .ropeproject
 env
-.vscode
 .idea
-STAR-Thermal_env
+venv

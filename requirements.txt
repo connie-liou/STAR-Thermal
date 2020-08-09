@@ -21,3 +21,4 @@ six
 Werkzeug
 dash-bootstrap-components
 waitress
+scipy
