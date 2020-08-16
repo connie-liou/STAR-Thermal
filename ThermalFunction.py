@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from constants import STEFAN_BOLTZMAN
+from model.constants import STEFAN_BOLTZMAN
 
 
 # calculating absorbed heat loads received from spacecraft
@@ -98,5 +98,5 @@ def ThermalFunction(
 
     plt.show()
 
-# ThermalFunction(500000, 0.05, 0.85, 0.65, 880, 3970, 373, 30, 90)
 
+ThermalFunction(500000, 0.05, 0.85, 0.65, 880, 3970, 373, 30, 90)

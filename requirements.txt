@@ -22,3 +22,4 @@ Werkzeug
 dash-bootstrap-components
 waitress
 scipy
+matplotlib
