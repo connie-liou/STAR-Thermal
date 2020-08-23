@@ -275,61 +275,63 @@ def layout(app):
                         html.Div([
                             html.H6('Radiation View Factors'),
                             html.Div([
-                                dash_table.DataTable(
-                                    id = 'radiation-table',
-                                    
-                                        columns=[
-                                            {"name": "Surface #", "id": "surface-number"},
-                                            {
-                                                'name': 'Surface 1',
-                                                'id': 'radiation-1',
-                                                'type': 'numeric',
-                                                'deletable': False,
-                                                'renamable': False,
-                                                'clearable': True
-                                            },
-                                            {
-                                                'name': 'Surface 2',
-                                                'id': 'radiation-2',
-                                                'type': 'numeric',
-                                                'deletable': False,
-                                                'renamable': False,
-                                                'clearable': True
-                                            },
-                                        ],
-                                        data=[
-                                            {'surface-number': 'Surface 1', 'radiation-1': 0, 'radiation-2':0},
-                                            {'surface-number': 'Surface 2', 'radiation-1': 0, 'radiation-2':0}
+                                html.Div([
+                                    dash_table.DataTable(
+                                        id = 'radiation-table',
+                                        
+                                            columns=[
+                                                {"name": "Surface #", "id": "surface-number"},
+                                                {
+                                                    'name': 'Surface 1',
+                                                    'id': 'radiation-1',
+                                                    'type': 'numeric',
+                                                    'deletable': False,
+                                                    'renamable': False,
+                                                    'clearable': True
+                                                },
+                                                {
+                                                    'name': 'Surface 2',
+                                                    'id': 'radiation-2',
+                                                    'type': 'numeric',
+                                                    'deletable': False,
+                                                    'renamable': False,
+                                                    'clearable': True
+                                                },
                                             ],
-                                        merge_duplicate_headers=True,
-                                        editable=True,
-                                        row_deletable=False,
-                                        export_headers='display',
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        },
-                                        # style_data_conditional=[
-                                        #     {
-                                        #         'if': {
-                                        #             'filter_query': '{{{col}}} > 5',
-                                        #             'column_id': '{Surface 1}'
-                                        #         },
-                                        #     'backgroundColor': 'salmon',
-                                        #     } 
-                                        # ]
-                                )
-                            ],className='table-container'),
-                        ], id = 'radiation-table-container',className='tab-container '),
-                        html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id = 'rad-matrix-error',hidden=True),
-                        html.Hr(),
-                        html.Div([
-                            html.P("Click for detailed help"),
-                            html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='battery-help-button'),
-                        ], className='help-button-container')
-                    ], className='custom-tab')
+                                            data=[
+                                                {'surface-number': 'Surface 1', 'radiation-1': 0, 'radiation-2':0},
+                                                {'surface-number': 'Surface 2', 'radiation-1': 0, 'radiation-2':0}
+                                                ],
+                                            merge_duplicate_headers=True,
+                                            editable=True,
+                                            row_deletable=False,
+                                            export_headers='display',
+                                            style_cell={
+                                                'color': 'black',
+                                                'whiteSpace': 'normal',
+                                                'height': 'auto',
+                                                'maxWidth': 50,
+                                            },
+                                            # style_data_conditional=[
+                                            #     {
+                                            #         'if': {
+                                            #             'filter_query': '{{{col}}} > 5',
+                                            #             'column_id': '{Surface 1}'
+                                            #         },
+                                            #     'backgroundColor': 'salmon',
+                                            #     } 
+                                            # ]
+                                    )
+                                ],className='table-container'),
+                            ], id = 'radiation-table-container',className='tab-container '),
+                            html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id = 'rad-matrix-error',hidden=True),
+                            html.Hr(),
+                            html.Div([
+                                html.P("Click for detailed help"),
+                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='battery-help-button'),
+                            ], className='help-button-container')
+                        ],className='tab-container')
+                    ], className='custom-tab' )
                     ##################################################################################################
                     , dcc.Tab(label='Conductance', children=[
                         html.Div([
