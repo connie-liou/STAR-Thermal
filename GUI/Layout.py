@@ -274,53 +274,55 @@ def layout(app):
                     , dcc.Tab(label='Radiation', children=[
                         html.Div([
                             html.H6('Radiation View Factors'),
-                            dash_table.DataTable(
-                                id = 'radiation-table',
-                                    columns=[
-                                        {"name": "Surface #", "id": "surface-number"},
-                                        {
-                                            'name': 'Surface 1',
-                                            'id': 'radiation-1',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        },
-                                        {
-                                            'name': 'Surface 2',
-                                            'id': 'radiation-2',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        },
-                                    ],
-                                    data=[
-                                        {'surface-number': 'Surface 1', 'radiation-1': 0, 'radiation-2':0},
-                                        {'surface-number': 'Surface 2', 'radiation-1': 0, 'radiation-2':0}
+                            html.Div([
+                                dash_table.DataTable(
+                                    id = 'radiation-table',
+                                    
+                                        columns=[
+                                            {"name": "Surface #", "id": "surface-number"},
+                                            {
+                                                'name': 'Surface 1',
+                                                'id': 'radiation-1',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
+                                            },
+                                            {
+                                                'name': 'Surface 2',
+                                                'id': 'radiation-2',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
+                                            },
                                         ],
-                                    merge_duplicate_headers=True,
-                                    editable=True,
-                                    row_deletable=False,
-                                    export_headers='display',
-                                    style_cell={
-                                        'color': 'black',
-                                        'whiteSpace': 'normal',
-                                        'height': 'auto',
-                                        'maxWidth': 50,
-                                    },
-                                    # style_data_conditional=[
-                                    #     {
-                                    #         'if': {
-                                    #             'filter_query': '{{{col}}} > 5',
-                                    #             'column_id': '{Surface 1}'
-                                    #         },
-                                    #     'backgroundColor': 'salmon',
-                                    #     } 
-                                    # ]
+                                        data=[
+                                            {'surface-number': 'Surface 1', 'radiation-1': 0, 'radiation-2':0},
+                                            {'surface-number': 'Surface 2', 'radiation-1': 0, 'radiation-2':0}
+                                            ],
+                                        merge_duplicate_headers=True,
+                                        editable=True,
+                                        row_deletable=False,
+                                        export_headers='display',
+                                        style_cell={
+                                            'color': 'black',
+                                            'whiteSpace': 'normal',
+                                            'height': 'auto',
+                                            'maxWidth': 50,
+                                        },
+                                        # style_data_conditional=[
+                                        #     {
+                                        #         'if': {
+                                        #             'filter_query': '{{{col}}} > 5',
+                                        #             'column_id': '{Surface 1}'
+                                        #         },
+                                        #     'backgroundColor': 'salmon',
+                                        #     } 
+                                        # ]
                                 )
-                            
-                        ], id = 'radiation-table-container',className='tab-container'),
+                            ],className='table-container'),
+                        ], id = 'radiation-table-container',className='tab-container '),
                         html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id = 'rad-matrix-error',hidden=True),
                         html.Hr(),
                         html.Div([
@@ -333,44 +335,45 @@ def layout(app):
                         html.Div([
                             html.Div([
                                 html.H6('Conductance between nodes'),
-                                dash_table.DataTable(
-                                    id = 'conductance-table',
-                                        columns=[
-                                            {"name": "Surface #", "id": 'surface-conductance-number'},
-                                            {
-                                                'name': 'Surface 1',
-                                                'id': 'conductance-1',
-                                                'type': 'numeric',
-                                                'deletable': False,
-                                                'renamable': False,
-                                                'clearable': True
-                                            },
-                                            {
-                                                'name': 'Surface 2',
-                                                'id': 'conductance-2',
-                                                'type': 'numeric',
-                                                'deletable': False,
-                                                'renamable': False,
-                                                'clearable': True
-                                            },
-                                        ],
-                                            data=[
-                                                {'surface-conductance-number': 'Surface 1', 'conductance-1': 0, 'conductance-2':0},
-                                                {'surface-conductance-number': 'Surface 2', 'conductance-1': 0, 'conductance-2':0}  
-                                                 
-                                                ],
-                                            merge_duplicate_headers=True,
-                                            editable=True,
-                                            row_deletable=False,
-                                            export_headers='display',
-                                            style_cell={
-                                                'color': 'black',
-                                                'whiteSpace': 'normal',
-                                                'height': 'auto',
-                                                'maxWidth': 50,
-                                            }
+                                html.Div([
+                                    dash_table.DataTable(
+                                        id = 'conductance-table',
+                                            columns=[
+                                                {"name": "Surface #", "id": 'surface-conductance-number'},
+                                                {
+                                                    'name': 'Surface 1',
+                                                    'id': 'conductance-1',
+                                                    'type': 'numeric',
+                                                    'deletable': False,
+                                                    'renamable': False,
+                                                    'clearable': True
+                                                },
+                                                {
+                                                    'name': 'Surface 2',
+                                                    'id': 'conductance-2',
+                                                    'type': 'numeric',
+                                                    'deletable': False,
+                                                    'renamable': False,
+                                                    'clearable': True
+                                                },
+                                            ],
+                                                data=[
+                                                    {'surface-conductance-number': 'Surface 1', 'conductance-1': 0, 'conductance-2':0},
+                                                    {'surface-conductance-number': 'Surface 2', 'conductance-1': 0, 'conductance-2':0}  
+                                                    
+                                                    ],
+                                                merge_duplicate_headers=True,
+                                                editable=True,
+                                                row_deletable=False,
+                                                export_headers='display',
+                                                style_cell={
+                                                    'color': 'black',
+                                                    'whiteSpace': 'normal',
+                                                    'height': 'auto',
+                                                    'maxWidth': 50,
+                                                }
                                     )
-                            
+                                ],className='table-container'),
                             ], id = 'conductance-table-container'),
                             html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id = 'cond-matrix-error',hidden=True),
                             html.Hr(),
@@ -398,15 +401,16 @@ def layout(app):
                             #Simple Orbit Container
                             html.Div([
                                 html.Div([
-                                    html.P("Orbit Type", className='sc-bwzfXH.eYbLCt', id='orbit-label'),
+                                    html.P("Orbit Type", className='sc-bwzfXH.eYbLCt orbit-label'),
                                     dcc.Dropdown(
                                         id='orbit-type',
+                                        className = 'orbit-dropdown',
                                         options=[
                                             {'label': 'L1', 'value': 'L1'}, {'label': 'L2', 'value': 'L2'},
                                             {'label': 'LEO', 'value': 'LEO'}],
                                         value='LEO'
                                     ),
-                                ], id='orbit-picker'),
+                                ], className='orbit-container'),
                                 # html.P("Note: Choose a time interval less than or equal to your data time steps"),
                                 html.Div([
                                     html.Div([
@@ -520,168 +524,162 @@ def layout(app):
                                     ]),
                                 ], id='constant-orbit-container', className='save-container'),
                             ], id = 'simple-orbit-container', className = 'save-container'),
-                            html.Hr(),
-                            html.Div([
-                                html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='orbit-help-button'),
-                            ], className='help-button-container'),
-
-                            #Complex Orbit Container
-                            html.Div([
-                                html.P('Orientation'),
-                                html.Div([
-                                    html.Div([
+                            
+                            
+                            html.Div([ #Complex Orbit Container
+                                
+                                    
+                                    html.Div([ #Start/End Times row
                                         html.Div([
-                                            html.Div([
-                                                dbc.FormGroup(
-                                                    [
-                                                        dbc.Label("Start Time (mins)"),
-                                                        dbc.Input(
-                                                            type = "number", 
-                                                            min = 0, 
-                                                            max = 1000000000, 
-                                                            step=0.0001,
-                                                            id = 'start-time-complex',
-                                                            value=0,
-                                                            className = 'styled-numeric-input',
-                                                            debounce=True)
-                                                    ]),
-                                            ]),
-                                            html.Div([
-                                                dbc.FormGroup(
-                                                    [
-                                                        dbc.Label("End Time (mins)"),
-                                                        dbc.Input(
-                                                            type = "number", 
-                                                            min = 0, 
-                                                            max = 10000000000, 
-                                                            step=0.0001,
-                                                            id = 'end-time-complex',
-                                                            value=600,
-                                                            className = 'styled-numeric-input',
-                                                            debounce=True)
-                                                    ]),
-                                            ]),
-                                            html.Div([
-                                                dbc.FormGroup(
-                                                    [
-                                                        dbc.Label("Time Interval (mins)"),
-                                                        dbc.Input(
-                                                            type = "number", 
-                                                            min = 0, 
-                                                            max = 100000000, 
-                                                            step=0.0001,
-                                                            id = 'timestep-complex',
-                                                            value=1,
-                                                            className = 'styled-numeric-input',
-                                                            debounce=True)
-                                                    ]),
-                                            ]),
-                                        ], className='save-container'),
-                                        html.Div([
-                                            dbc.DropdownMenu(
-                                                    label="Spacecraft Configuration?",
-                                                    children = [
-                                                        dbc.DropdownMenuItem('Rectangle'),
-                                                        dbc.DropdownMenuItem('Triangle'),
-                                                        dbc.DropdownMenuItem('Hexagonal'),
-                                                    ],
-                                                    id = 'spacecraft-configuration'
-                                                    ),
-                                        ]),
-                                        html.Div([html.P('Orbital Elements')]),
-                                        html.Div([
-                                            html.Div([
-                                                dbc.FormGroup(
-                                                    [
-                                                        dbc.Label("Inclination (deg)"),
-                                                        dbc.Input(
-                                                            type = "number", 
-                                                            min = -360, 
-                                                            max = 360, 
-                                                            step=0.0001,
-                                                            id = 'inclination',
-                                                            value=0,
-                                                            className = 'styled-numeric-input',
-                                                            debounce=True)
-                                                    ]),
-                                                ]),
-                                            html.Div([
-                                                dbc.FormGroup(
-                                                    [
-                                                        dbc.Label("Right Ascencion of Ascenidng node"),
-                                                        dbc.Input(
-                                                            type = "number", 
-                                                            min = 0, 
-                                                            max = 10000000000, 
-                                                            step=0.0001,
-                                                            id = 'right-ascension',
-                                                            value=0,
-                                                            className = 'styled-numeric-input',
-                                                            debounce=True)
-                                                    ]),
-                                                ]),
-                                            html.Div([
-                                                dbc.FormGroup(
-                                                    [
-                                                        dbc.Label("Argument of Periapsis"),
-                                                        dbc.Input(
-                                                            type = "number", 
-                                                            min = 0, 
-                                                            max = 100000000, 
-                                                            step=0.0001,
-                                                            id = 'periapsis',
-                                                            value=1,
-                                                            className = 'styled-numeric-input',
-                                                            debounce=True)
-                                                    ]),
-                                                ]),
-                                            
-                                        ], className='save-container'),
-                                        html.Div([
-                                            html.Div([
                                             dbc.FormGroup(
                                                 [
-                                                    dbc.Label("Max Altitude (km)"),
+                                                    dbc.Label("Start Time (mins)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 1000000000, 
+                                                        step=0.0001,
+                                                        id = 'start-time-complex',
+                                                        value=0,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                        ]),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("End Time (mins)"),
                                                     dbc.Input(
                                                         type = "number", 
                                                         min = 0, 
                                                         max = 10000000000, 
                                                         step=0.0001,
-                                                        id = 'max-altitude',
+                                                        id = 'end-time-complex',
+                                                        value=600,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                        ]),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Time Interval (mins)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 100000000, 
+                                                        step=0.0001,
+                                                        id = 'timestep-complex',
+                                                        value=1,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                        ]),
+                                    ], className='save-container'),
+                                    html.Div([
+                                        html.P("Spacecraft Configuration?", className='sc-bwzfXH.eYbLCt orbit-label'),
+                                        dcc.Dropdown(
+                                            id='spacecraft-config',
+                                            className='orbit-dropdown',
+                                            options=[
+                                                {'label': 'Rectangle', 'value': 'rect'}, {'label': 'Triangle', 'value': 'tri'},
+                                                {'label': 'Hexagonal', 'value': 'hex'}],
+                                            value='rect'
+                                        ),
+                                    ], className='orbit-container'),
+                                    
+                                    html.P('Orbital Elements'),
+                                    html.Div([ #Orbital Elements cluster
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Inclination (deg)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = -360, 
+                                                        max = 360, 
+                                                        step=0.0001,
+                                                        id = 'inclination',
                                                         value=0,
                                                         className = 'styled-numeric-input',
                                                         debounce=True)
                                                 ]),
                                             ]),
-                                            html.Div([
-                                                dbc.FormGroup(
-                                                    [
-                                                        dbc.Label("eccentricity"),
-                                                        dbc.Input(
-                                                            type = "number", 
-                                                            min = 0, 
-                                                            max = 1, 
-                                                            step=0.0001,
-                                                            id = 'eccentricity',
-                                                            value=1,
-                                                            className = 'styled-numeric-input',
-                                                            debounce=True)
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Right Ascencion of Ascenidng node"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 10000000000, 
+                                                        step=0.0001,
+                                                        id = 'right-ascension',
+                                                        value=0,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
                                                 ]),
                                             ]),
-                                        ], className='save-container'),
-                                    ], className = 'table-container'),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Argument of Periapsis"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 100000000, 
+                                                        step=0.0001,
+                                                        id = 'periapsis',
+                                                        value=1,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                            ]),
+
+                                    ], className='save-container'),
                                     html.Div([
-                                        dbc.DropdownMenu(
-                                            
-                                            label="Z+ initial orientation",
-                                            children = [
-                                                dbc.DropdownMenuItem('Sun'),
-                                                dbc.DropdownMenuItem('Earth'),
-                                            ],
-                                            id = 'z-initial-orientation'
+                                        html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Max Altitude (km)"),
+                                                dbc.Input(
+                                                    type = "number", 
+                                                    min = 0, 
+                                                    max = 10000000000, 
+                                                    step=0.0001,
+                                                    id = 'max-altitude',
+                                                    value=0,
+                                                    className = 'styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                        ]),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("eccentricity"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 1, 
+                                                        step=0.0001,
+                                                        id = 'eccentricity',
+                                                        value=1,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                            ]),
+                                        ]),
+                                    ], className='save-container'),
+                                    
+                                    html.Div([
+                                            html.P("Z+ initial orientation", className='sc-bwzfXH.eYbLCt orbit-label'),
+                                            dcc.Dropdown(
+                                                id='z-initial-orient',
+                                                className='orbit-dropdown',
+                                                options=[
+                                                    {'label': 'Sun', 'value': 'sun'}, {'label': 'Earth', 'value': 'Earth'}],
+                                                value='rect'
                                             ),
-                                    ]),
+                                        ], className='orbit-container'),
                                     html.Div([
                                         dbc.FormGroup(
                                             [
@@ -698,466 +696,30 @@ def layout(app):
                                             ]),
                                     ]),
                                     html.Div([
-                                        html.P("About which Spacecraft axis?", className='sc-bwzfXH.eYbLCt'),
+                                        html.P("About which Spacecraft axis?", className='sc-bwzfXH.eYbLCt orbit-label'),
                                         dcc.Dropdown(
                                             id='spacecraft-axis',
+                                            className='orbit-dropdown',
                                             options=[
                                                 {'label': 'X', 'value': 'X'}, {'label': 'Y', 'value': 'Y'},
                                                 {'label': 'Z', 'value': 'Z'}],
-                                            value='LEO'
+                                            value='Z'
                                         ),
-                                    ], className='save-container'),
-                                ], className = 'table-container')
+                                    ], className='orbit-container'),
+                                
                                 
                             ], id='complex-orbit-container', className = 'save-container'),
+                            html.Hr(),
+                            html.Div([
+                                html.P("Click for detailed help"),
+                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='orbit-help-button'),
+                            ], className='help-button-container'),
                         ], className='tab-container')
 
                     ], className='custom-tab')
                     #####################################################################################################################
-                    , dcc.Tab(label='umm', children=[
-                        
-                            html.Div([
-                                html.Div([
-                                    html.H6('Solar Model'),
-                                    dcc.RadioItems(
-                                        options=[
-                                            {'label': 'Simple', 'value': 'Simple'},
-                                            {'label': 'Complex', 'value': 'Complex'}
-                                        ],
-                                        value='Complex',
-                                        id='use-simple-solar'
-                                    ),
-                                    
-                                
-                            ], className='save-container'),
-                            html.Hr(),
-                            html.Div(id='complex-solar-container', children=[
-                                html.Div([
-                                    html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Line/Diode Drop (V)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 100000, 
-                                                step=0.0001,
-                                                id = 'line-drop-SA',
-                                                value=0,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                                    daq.NumericInput(
-                                        id='num-sides',
-                                        label='Number of Wings',
-                                        labelPosition='top',
-                                        max=10000,
-                                        min=1,
-                                        value=3,
-                                    ),
-                                    html.Div([
-                                        html.P('Use Sun Angles?', style={'font-size': '13px'}),
-                                        dcc.RadioItems(
-                                            options=[
-                                                {'label': 'Yes', 'value': 'Yes'},
-                                                {'label': 'No', 'value': 'No'}
-                                            ],
-                                            value='No',
-                                            id='use-sunangles'
-                                        ),
-                                    ])
-                                ], className='save-container'),  # input container
-                                html.Div([
-
-                                    html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label('RPM'),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                max = 100000, 
-                                                step=0.0001,
-                                                id = 'rpm',
-                                                value=0,
-                                                className = 'styled-numeric-input',
-                                                debounce=True)
-                                        ]),
-                                ]),
-                                ], className='save-container', id='spinner-inputs'),
-                                html.Div([
-                                    html.P("Temperature Factors"),
-                                    dash_table.DataTable(
-                                        id='Temp-Coeff',
-                                        columns=[{
-                                            'name': 'Voltage, Open Circuit',
-                                            'id': 'Voc',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Current, Open Circuit',
-                                            'id': 'Isc',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Voltage, Max Power',
-                                            'id': 'Vmp',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Current, Max Power',
-                                            'id': 'Imp',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }
-                                        ],
-                                        data=[
-                                            {'Voc': -0.0063,
-                                            'Isc': 0.00058,
-                                            'Vmp': -0.0067,
-                                            'Imp': 0.00045}
-                                        ],
-                                        editable=True,
-                                        row_deletable=False,
-                                        export_headers='display',
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        }
-                                    )
-                                ], className='table-container'),  # temp coeff
-                                html.Div([
-                                    html.P("BOL/EOL Factors"),
-                                    html.Div([daq.NumericInput(
-                                        id='num-EOL',
-                                        label='Num. of Factors',
-                                        labelPosition='top',
-                                        max=100,
-                                        min=1,
-                                        value=1,
-                                    ),
-                                    html.Div([
-                                        html.P('Use EOL Factors?', style={'font-size': '13px'}),
-                                        dcc.RadioItems(
-                                            options=[
-                                                {'label': 'Yes', 'value': 'Yes'},
-                                                {'label': 'No', 'value': 'No'}
-                                            ],
-                                            value='No',
-                                            id='use-EOL'
-                                        ),
-                                    ]),], className = 'save-container'),
-                                    dash_table.DataTable(
-                                        id='Solar-Table-BOL',
-                                        columns=[{
-                                            'name': 'Voc',
-                                            'id': 'Voc-val',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Isc',
-                                            'id': 'Isc-val',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Vmp',
-                                            'id': 'Vmp-val',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Imp',
-                                            'id': 'Imp-val',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }
-                                        ],
-                                        data=[
-                                            {'Voc-val': 2.711,
-                                            'Isc-val': 0.945,
-                                            'Vmp-val': 2.387,
-                                            'Imp-val': 0.916
-                                            },],
-                                        editable=True,
-                                        row_deletable=False,
-                                        export_headers='display',
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        }
-                                    ),
-                                ], className = 'table-container'),
-                                
-                                html.Div([dash_table.DataTable(
-                                    id='Solar-Table-EOL',
-                                    columns=[{
-                                        'name': 'Factors',
-                                        'id': 'EOL-factor-names',
-                                        'deletable': False,
-                                        'renamable': False,
-                                        'clearable': True
-                                    },{
-                                        'name': 'Voc',
-                                        'id': 'Voc-EOL',
-                                        'type': 'numeric',
-                                        'deletable': False,
-                                        'renamable': False,
-                                        'clearable': True
-                                    }, {
-                                        'name': 'Isc',
-                                        'id': 'Isc-EOL',
-                                        'type': 'numeric',
-                                        'deletable': False,
-                                        'renamable': False,
-                                        'clearable': True
-                                    }, {
-                                        'name': 'Vmp',
-                                        'id': 'Vmp-EOL',
-                                        'type': 'numeric',
-                                        'deletable': False,
-                                        'renamable': False,
-                                        'clearable': True
-                                    }, {
-                                        'name': 'Imp',
-                                        'id': 'Imp-EOL',
-                                        'type': 'numeric',
-                                        'deletable': False,
-                                        'renamable': False,
-                                        'clearable': True
-                                    }
-                                    ],
-                                    data=[
-                                        {'EOL-factor-names': 'LEO aphelion distance factor',
-                                        'Voc-EOL': 1,
-                                        'Isc-EOL': 0.967,
-                                        'Vmp-EOL': 1,
-                                        'Imp-EOL': 0.967
-                                            },],
-                                    editable=True,
-                                    row_deletable=False,
-                                    export_headers='display',
-                                    style_cell={
-                                        'color': 'black',
-                                        'whiteSpace': 'normal',
-                                        'height': 'auto',
-                                        'maxWidth': 50,
-                                    }
-                                )], id = 'EOL-table-container', className = 'table-container'),
-                                
-                                html.Div([
-                                    # html.Button('Add Wing', id='add-rows-button', n_clicks=0),
-                                    # wings
-                                    html.P("Solar Wings"),
-                                    dash_table.DataTable(
-                                        id='Solar-Table',
-                                        columns=[{
-                                            'name': 'Current Temp (C)',
-                                            'id': 'current-temp',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'String Size',
-                                            'id': 'string-size',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Segment Size',
-                                            'id': 'segment-size',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Roll Angle',
-                                            'id': 'roll',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Pitch Angle',
-                                            'id': 'pitch',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }
-                                        ],
-                                        data=[
-                                            {'current-temp': 107,
-                                            'string-size': 20,
-                                            'segment-size': 68,
-                                            'roll': 0,
-                                            'pitch': 0
-                                            },
-                                            {'current-temp': 107,
-                                            'string-size': 20,
-                                            'segment-size': 68,
-                                            'roll': 60,
-                                            'pitch': 0
-                                            },
-                                            {'current-temp': 107,
-                                            'string-size': 20,
-                                            'segment-size': 68,
-                                            'roll': -60,
-                                            'pitch': 0
-                                            }
-                                        ],
-                                        editable=True,
-                                        row_deletable=False,
-                                        export_headers='display',
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        }
-                                    )
-                                ], className='table-container'),  # aolarwings
-                                html.Div([
-                                    html.P("Import sun angles for each wing from 0 to 360"),
-                                    dash_table.DataTable(
-                                        id='sun-angle-table', style_table={
-                                            'height': '300px',
-                                            'overflowY': 'scroll',
-                                        },
-                                        columns=[{
-                                            'name': 'Orbit Angles',
-                                            'id': 'orbit-angles',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Sun Angle (wing 1)',
-                                            'id': 'sun-angles-1',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Sun Angle (wing 2)',
-                                            'id': 'sun-angles-2',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Sun Angle (wing 3)',
-                                            'id': 'sun-angles-3',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }],
-                                        data=[
-                                            {'orbit-angles': 0,
-                                            'sun-angles-1': 0,
-                                            'sun-angles-2': 0,
-                                            'sun-angles-3': 0}
-                                        ], editable=True, row_deletable=True,
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        }
-                                    )
-                                ], className='table-container', id='sun-angle-table-container'),  # sunangles
-                                html.Div([
-                                    html.P("Import sun angles for each wing for one orbit"),
-                                    dash_table.DataTable(
-                                        id='time-sun-angle-table', style_table={
-                                            'height': '300px',
-                                            'overflowY': 'scroll',
-                                        },
-                                        columns=[{
-                                            'name': 'Time',
-                                            'id': 'time-sun-angles',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Sun Angle (wing 1)',
-                                            'id': 'time-sun-angles-1',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Sun Angle (wing 2)',
-                                            'id': 'time-sun-angles-2',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Sun Angle (wing 3)',
-                                            'id': 'time-sun-angles-3',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }],
-                                        data=[
-                                            {'time-sun-angles': 0,
-                                            'time-sun-angles-1': 0,
-                                            'time-sun-angles-2': 0,
-                                            'time-sun-angles-3': 0}
-                                        ], editable=True, row_deletable=True,
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        }
-                                    )
-                                ], className='table-container', id='time-sun-angle-table-container'),
-                            ]),
-                            html.Div(id='simple-solar-container', children=[
-                                html.Div([
-                                    dbc.FormGroup(
-                                        [
-                                            dbc.Label("Solar Power (W)"),
-                                            dbc.Input(
-                                                type = "number", 
-                                                min = 0, 
-                                                step = 0.0001, 
-                                                value=0, 
-                                                id = 'simple-solar-power',
-                                                className = 'styled-numeric-input')
-                                        ]),
-                                ])    
-                            ], className='save-container'),
-                            html.Hr(),
-                            html.Div([
-                                html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='solar-help-button'),
-                            ], className='help-button-container')
-                        ], className='tab-container')
-                    ], className='custom-tab')
-                    ######################################################################################################################
-                    ])
+                
+                ])
             ], className='pretty_container', id='all-tab-container'),
 
             # graphs

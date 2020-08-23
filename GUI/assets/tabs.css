@@ -127,16 +127,20 @@
     text-align: center;
 }
 
-#orbit-type{
+.orbit-dropdown{
     width: 200px;
     color: black;
     display: inline-block;
 }
 
-#orbit-picker{
+.orbit-container{
     text-align: center;
     justify-content: space-around;
     align-content: center;
+}
+
+.orbit-label{
+    font-size: 13px;
 }
 
 .sun-angle-picker{
@@ -188,10 +192,6 @@
 }
 
 .jsx-2309230230.tab {
-    font-size: 13px;
-}
-
-#orbit-label{
     font-size: 13px;
 }
 
