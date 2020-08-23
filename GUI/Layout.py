@@ -588,7 +588,7 @@ def layout(app):
                                         ),
                                     ], className='orbit-container'),
                                     
-                                    html.P('Orbital Elements'),
+                                    html.H6('Orbital Elements'),
                                     html.Div([ #Orbital Elements cluster
                                         html.Div([
                                             dbc.FormGroup(
@@ -670,7 +670,9 @@ def layout(app):
                                         ]),
                                     ], className='save-container'),
                                     
+                                    html.H6('Orientation'),
                                     html.Div([
+                                        html.Div([
                                             html.P("Z+ initial orientation", className='sc-bwzfXH.eYbLCt orbit-label'),
                                             dcc.Dropdown(
                                                 id='z-initial-orient',
@@ -680,33 +682,150 @@ def layout(app):
                                                 value='rect'
                                             ),
                                         ], className='orbit-container'),
+                                        
+                                        html.Div([
+                                            html.P("About which Spacecraft axis?", className='sc-bwzfXH.eYbLCt orbit-label'),
+                                            dcc.Dropdown(
+                                                id='spacecraft-axis',
+                                                className='orbit-dropdown',
+                                                options=[
+                                                    {'label': 'X', 'value': 'X'}, {'label': 'Y', 'value': 'Y'},
+                                                    {'label': 'Z', 'value': 'Z'}],
+                                                value='Z'
+                                            ),
+                                        ], className='orbit-container'),
+                                    ], className='save-container'),
                                     html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Additional Rotation (deg per orbit)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 10000000000, 
+                                                        step=0.0001,
+                                                        id = 'additional-rotation',
+                                                        value=0,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                    ]),
+
+                                    html.H6('Orbiting Body'),
+                                    html.Div([ #Orbiting body cluster
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Radius (km)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 36000000000, 
+                                                        step=0.0001,
+                                                        id = 'orbit-body-radius',
+                                                        value=0,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                            ]),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Gravitational Param (km^3/s^2)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 10000000000, 
+                                                        step=0.0001,
+                                                        id = 'grav-param',
+                                                        value=0,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                            ]),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Eff. Blackbody Temp (K)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 100000000, 
+                                                        step=0.0001,
+                                                        id = 'blackbody-temp',
+                                                        value=1,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                            ]),
+
+                                    ], className='save-container'),
+                                    html.Div([
+                                        html.Div([
                                         dbc.FormGroup(
                                             [
-                                                dbc.Label("Additional Rotation (deg per orbit)"),
+                                                dbc.Label("Albedo Factor"),
                                                 dbc.Input(
                                                     type = "number", 
                                                     min = 0, 
-                                                    max = 10000000000, 
+                                                    max = 1, 
                                                     step=0.0001,
-                                                    id = 'additional-rotation',
+                                                    id = 'orbiting-albedo',
                                                     value=0,
                                                     className = 'styled-numeric-input',
                                                     debounce=True)
                                             ]),
-                                    ]),
+                                        ]),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Solar Const. above Atmosphere (W/m^2)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 10000000, 
+                                                        step=0.0001,
+                                                        id = 'solar-const-atm',
+                                                        value=1,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                            ]),
+                                        ]),
+                                    ], className='save-container'),
+                                    
+                                    html.H6('Solar Position'),
                                     html.Div([
-                                        html.P("About which Spacecraft axis?", className='sc-bwzfXH.eYbLCt orbit-label'),
-                                        dcc.Dropdown(
-                                            id='spacecraft-axis',
-                                            className='orbit-dropdown',
-                                            options=[
-                                                {'label': 'X', 'value': 'X'}, {'label': 'Y', 'value': 'Y'},
-                                                {'label': 'Z', 'value': 'Z'}],
-                                            value='Z'
-                                        ),
-                                    ], className='orbit-container'),
-                                
+                                        html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Right Ascension of Sun (deg)"),
+                                                dbc.Input(
+                                                    type = "number", 
+                                                    min = 0, 
+                                                    max = 1000000, 
+                                                    step=0.0001,
+                                                    id = 'right-ascension-sun',
+                                                    value=0,
+                                                    className = 'styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                        ]),
+                                        html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Declination of Sun (deg)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 10000000, 
+                                                        step=0.0001,
+                                                        id = 'declination-sun',
+                                                        value=1,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                            ]),
+                                        ]),
+                                    ], className='save-container'),
                                 
                             ], id='complex-orbit-container', className = 'save-container'),
                             html.Hr(),
