@@ -200,7 +200,6 @@ def layout(app):
         # html.Div([html.Img(src=app.get_asset_url('blank-nasa-logo.png'), id='logo-button')]),
         html.Div([  # row with tabs and graphs
             # tabs
-            
             html.Div([  # tabs
                 dcc.Tabs(id="custom-tabs", children=[
                     #######################################################################################################
@@ -250,7 +249,8 @@ def layout(app):
                                             {'node-column':'Density(kg/m^3)'},
                                             {'node-column':'Specific Heat(J/kg/K)'},
                                             {'node-column':'absorptivity'},
-                                            {'node-column':'emissivity'},],
+                                            {'node-column':'emissivity'},
+                                            {'node-column':'Heat Dissipation (W)'},],
                                         editable=True,
                                         row_deletable=False,
                                         export_headers='display',
@@ -394,10 +394,8 @@ def layout(app):
                                         id='use-simple-orbit'
                                 ),
                             ], className='save-container'),
-                            html.Hr(),
-                            html.Div([
-                                html.P('hiiii')
-                            ], id = 'complex-orbit-container'),
+                            html.Hr(),                        
+                            #Simple Orbit Container
                             html.Div([
                                 html.Div([
                                     html.P("Orbit Type", className='sc-bwzfXH.eYbLCt', id='orbit-label'),
@@ -526,7 +524,192 @@ def layout(app):
                             html.Div([
                                 html.P("Click for detailed help"),
                                 html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='orbit-help-button'),
-                            ], className='help-button-container')
+                            ], className='help-button-container'),
+
+                            #Complex Orbit Container
+                            html.Div([
+                                html.P('Orientation'),
+                                html.Div([
+                                    html.Div([
+                                        html.Div([
+                                            html.Div([
+                                                dbc.FormGroup(
+                                                    [
+                                                        dbc.Label("Start Time (mins)"),
+                                                        dbc.Input(
+                                                            type = "number", 
+                                                            min = 0, 
+                                                            max = 1000000000, 
+                                                            step=0.0001,
+                                                            id = 'start-time-complex',
+                                                            value=0,
+                                                            className = 'styled-numeric-input',
+                                                            debounce=True)
+                                                    ]),
+                                            ]),
+                                            html.Div([
+                                                dbc.FormGroup(
+                                                    [
+                                                        dbc.Label("End Time (mins)"),
+                                                        dbc.Input(
+                                                            type = "number", 
+                                                            min = 0, 
+                                                            max = 10000000000, 
+                                                            step=0.0001,
+                                                            id = 'end-time-complex',
+                                                            value=600,
+                                                            className = 'styled-numeric-input',
+                                                            debounce=True)
+                                                    ]),
+                                            ]),
+                                            html.Div([
+                                                dbc.FormGroup(
+                                                    [
+                                                        dbc.Label("Time Interval (mins)"),
+                                                        dbc.Input(
+                                                            type = "number", 
+                                                            min = 0, 
+                                                            max = 100000000, 
+                                                            step=0.0001,
+                                                            id = 'timestep-complex',
+                                                            value=1,
+                                                            className = 'styled-numeric-input',
+                                                            debounce=True)
+                                                    ]),
+                                            ]),
+                                        ], className='save-container'),
+                                        html.Div([
+                                            dbc.DropdownMenu(
+                                                    label="Spacecraft Configuration?",
+                                                    children = [
+                                                        dbc.DropdownMenuItem('Rectangle'),
+                                                        dbc.DropdownMenuItem('Triangle'),
+                                                        dbc.DropdownMenuItem('Hexagonal'),
+                                                    ],
+                                                    id = 'spacecraft-configuration'
+                                                    ),
+                                        ]),
+                                        html.Div([html.P('Orbital Elements')]),
+                                        html.Div([
+                                            html.Div([
+                                                dbc.FormGroup(
+                                                    [
+                                                        dbc.Label("Inclination (deg)"),
+                                                        dbc.Input(
+                                                            type = "number", 
+                                                            min = -360, 
+                                                            max = 360, 
+                                                            step=0.0001,
+                                                            id = 'inclination',
+                                                            value=0,
+                                                            className = 'styled-numeric-input',
+                                                            debounce=True)
+                                                    ]),
+                                                ]),
+                                            html.Div([
+                                                dbc.FormGroup(
+                                                    [
+                                                        dbc.Label("Right Ascencion of Ascenidng node"),
+                                                        dbc.Input(
+                                                            type = "number", 
+                                                            min = 0, 
+                                                            max = 10000000000, 
+                                                            step=0.0001,
+                                                            id = 'right-ascension',
+                                                            value=0,
+                                                            className = 'styled-numeric-input',
+                                                            debounce=True)
+                                                    ]),
+                                                ]),
+                                            html.Div([
+                                                dbc.FormGroup(
+                                                    [
+                                                        dbc.Label("Argument of Periapsis"),
+                                                        dbc.Input(
+                                                            type = "number", 
+                                                            min = 0, 
+                                                            max = 100000000, 
+                                                            step=0.0001,
+                                                            id = 'periapsis',
+                                                            value=1,
+                                                            className = 'styled-numeric-input',
+                                                            debounce=True)
+                                                    ]),
+                                                ]),
+                                            
+                                        ], className='save-container'),
+                                        html.Div([
+                                            html.Div([
+                                            dbc.FormGroup(
+                                                [
+                                                    dbc.Label("Max Altitude (km)"),
+                                                    dbc.Input(
+                                                        type = "number", 
+                                                        min = 0, 
+                                                        max = 10000000000, 
+                                                        step=0.0001,
+                                                        id = 'max-altitude',
+                                                        value=0,
+                                                        className = 'styled-numeric-input',
+                                                        debounce=True)
+                                                ]),
+                                            ]),
+                                            html.Div([
+                                                dbc.FormGroup(
+                                                    [
+                                                        dbc.Label("eccentricity"),
+                                                        dbc.Input(
+                                                            type = "number", 
+                                                            min = 0, 
+                                                            max = 1, 
+                                                            step=0.0001,
+                                                            id = 'eccentricity',
+                                                            value=1,
+                                                            className = 'styled-numeric-input',
+                                                            debounce=True)
+                                                ]),
+                                            ]),
+                                        ], className='save-container'),
+                                    ], className = 'table-container'),
+                                    html.Div([
+                                        dbc.DropdownMenu(
+                                            
+                                            label="Z+ initial orientation",
+                                            children = [
+                                                dbc.DropdownMenuItem('Sun'),
+                                                dbc.DropdownMenuItem('Earth'),
+                                            ],
+                                            id = 'z-initial-orientation'
+                                            ),
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Additional Rotation (deg per orbit)"),
+                                                dbc.Input(
+                                                    type = "number", 
+                                                    min = 0, 
+                                                    max = 10000000000, 
+                                                    step=0.0001,
+                                                    id = 'additional-rotation',
+                                                    value=0,
+                                                    className = 'styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                    html.Div([
+                                        html.P("About which Spacecraft axis?", className='sc-bwzfXH.eYbLCt'),
+                                        dcc.Dropdown(
+                                            id='spacecraft-axis',
+                                            options=[
+                                                {'label': 'X', 'value': 'X'}, {'label': 'Y', 'value': 'Y'},
+                                                {'label': 'Z', 'value': 'Z'}],
+                                            value='LEO'
+                                        ),
+                                    ], className='save-container'),
+                                ], className = 'table-container')
+                                
+                            ], id='complex-orbit-container', className = 'save-container'),
                         ], className='tab-container')
 
                     ], className='custom-tab')
