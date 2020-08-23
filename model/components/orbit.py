@@ -12,13 +12,13 @@ from model.components.geocentricEquatorialCoordinates import (
 
 class Orbit:
     def __init__(
-            self,
-            inclination: float,
-            rightAscensionOfAscendingNode: float,
-            argumentOfPeriapsis: float,
-            maxAltitude: float,
-            eccentricity: float,
-            orbitalBody: OrbitalBody,
+        self,
+        inclination: float,
+        rightAscensionOfAscendingNode: float,
+        argumentOfPeriapsis: float,
+        maxAltitude: float,
+        eccentricity: float,
+        orbitalBody: OrbitalBody,
     ):
         self.inclination = inclination
         self.rightAscensionOfAscendingNode = rightAscensionOfAscendingNode
@@ -39,7 +39,9 @@ class Orbit:
         """This function covers equations 2.25 and 2.26 in the thermal
         analysis paper
         """
-        cosTrueAnomaly = (self.eccentricity - cos(eccentricAnomaly)) / (self.eccentricity * cos(eccentricAnomaly) - 1)
+        cosTrueAnomaly = (self.eccentricity - cos(eccentricAnomaly)) / (
+            self.eccentricity * cos(eccentricAnomaly) - 1
+        )
         if eccentricAnomaly <= pi:
             result = acos(cosTrueAnomaly)
         else:
@@ -50,7 +52,7 @@ class Orbit:
         return self.semiMajorAxis * (1 - self.eccentricity * cos(eccentricAnomaly))
 
     def getPerifocalCoordinates(
-            self, distance: float, trueAnomaly: float
+        self, distance: float, trueAnomaly: float
     ) -> PerifocalCoordinates:
         return PerifocalCoordinates(
             distance * cos(trueAnomaly), distance * sin(trueAnomaly), 0
@@ -88,6 +90,9 @@ class Orbit:
         return GeocentricEquatorialCoordinates(
             vectorResult[0], vectorResult[1], vectorResult[2]
         )
+
+    def inEclipse(self) -> bool:
+        pass
 
 
 def _getSemiMajorAxis(orbit: Orbit) -> float:

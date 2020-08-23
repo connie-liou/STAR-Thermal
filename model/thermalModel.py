@@ -30,7 +30,9 @@ class ThermalModel:
         # Internal heat transfer
         conductionRates = self.nodeSet.getConductionHeatTransferRates()
         internalRadiationRates = self.nodeSet.getRadiationHeatTransferRates()
-        # TODO Environmental heat transfer
+        # TODO Environmental heat transfer is not included yet
+
+        return conductionRates + internalRadiationRates
 
     def simulate(self) -> None:
         currentTime = 0
@@ -46,4 +48,3 @@ class ThermalModel:
                 )
 
             # TODO plot things
-
