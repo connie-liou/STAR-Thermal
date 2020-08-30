@@ -45,8 +45,8 @@ class ThermalModel:
         nodeTemperatures = []
         for node in self.nodeSet.nodes:
             nodeTemperatures.append([node.temperature])
-        print(f'nodeTemperatures: {nodeTemperatures}')
-        for _ in range(0, endTime, timeStep):
+        # print(f'nodeTemperatures: {nodeTemperatures}')
+        for _ in np.arange(timeStep, endTime, timeStep):
             heatTransferRates = self.getHeatTransferRates()
             changesInTemperature = np.zeros(self.nodeSet.numNodes)
             for index, node in enumerate(self.nodeSet.nodes):
@@ -56,11 +56,25 @@ class ThermalModel:
             previousTemperatures = []
             for singleNodeTemps in nodeTemperatures:
                 previousTemperatures.append(singleNodeTemps[-1])
-            print(f'previousTemperatures: {previousTemperatures}')
+            # print(f'previousTemperatures: {previousTemperatures}')
             for index, change in enumerate(changesInTemperature):
                 newTemp = previousTemperatures[index] + change
-                print(f'newTemp: {newTemp}')
+                # print(f'newTemp: {newTemp}')
                 nodeTemperatures[index].append(newTemp)
-            print(f'nodeTemperatures: {nodeTemperatures}')
+            # print(f'nodeTemperatures: {nodeTemperatures}')
 
         return nodeTemperatures
+
+    simulationNum = 1
+
+    def plotSimulationResults(self, tempList):
+        print('plotSimulationResults')
+        times = np.arange(0, self.timingConfiguration.endTime, self.timingConfiguration.timeStep)
+        print(f'times: {times}')
+        print(f'len times: {len(times)}')
+        print(f'tempList: {tempList}')
+        print(f'len tempList: {len(tempList)}')
+        plt.figure(self.simulationNum)
+        self.simulationNum += 1
+        plt.plot(times, tempList)
+        plt.show()
