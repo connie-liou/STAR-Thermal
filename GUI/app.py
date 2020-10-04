@@ -12,7 +12,6 @@ import numpy as np
 from HelpPopups import popupCallbacks
 from Layout import layout
 
-sys.path.append("/classes/")
 
 '''
 Init dash and flask applications and add extra assests

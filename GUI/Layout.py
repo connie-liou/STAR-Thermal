@@ -14,96 +14,11 @@ import plotly.graph_objs as go
 This file contains the HTML layout of the application.
 '''
 def layout(app):
-    bV = go.Scatter(
+    tempData = go.Scatter(
         x=[0],
         y=[0],
-        name='Voltage (V)',
+        name='Temperature',
         mode='lines', line=dict(color='rgb(255,0,0)')
-    )
-    ahrChange = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Ahr Change',
-        mode='lines', line=dict(color='rgb(210,194,49)'),
-        yaxis='y4'
-    )
-    SOC = go.Scatter(
-        x=[0],
-        y=[0],
-        name='SOC',
-        yaxis='y2',
-        mode='lines', line=dict(color='rgb(0, 255, 100)')
-    )
-    current = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Current (A)',
-        yaxis='y3',
-        mode='lines', line=dict(color='rgb(0,0,255)')
-    )
-    power = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Power (W)',
-        yaxis='y2',
-        mode='lines', line=dict(color='rgb(0, 255, 100)')
-    )
-    lc = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Load Current (A)',
-        yaxis='y3',
-        mode='lines', line=dict(color='rgb(0, 0, 255)')
-    )
-    lv = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Load Voltage (V)',
-        mode='lines', line=dict(color='rgb(255,0,0)')
-    )
-
-    sP = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Power (W)',
-        yaxis='y2',
-        mode='lines', line=dict(color='rgb(255,0,255)')
-    )
-    sI = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Current (A)',
-        yaxis='y3',
-        mode='lines', line=dict(color='rgb(0, 0, 255)')
-    )
-    sV = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Voltage (V)',
-        mode='lines', line=dict(color='rgb(255,0,0)')
-    )
-    power = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Load Power (W)',
-        yaxis='y4',
-        mode='lines', line=dict(dash='dot', color='rgb(255, 0, 255)')
-    )
-
-    solarAP = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Solar Array Power',
-        yaxis='y2',
-        legendgroup='array',
-        mode='lines', line=dict(color='rgb(255,0,0)')
-    )
-    solarAI = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Solar Array Current',
-        legendgroup='array',
-        mode='lines', line=dict(color='rgb(0,0,255)')
     )
 
     # systempath = os.getcwd() + '/Presets/System/'
@@ -847,13 +762,13 @@ def layout(app):
             html.Div([  # graph layout
                 html.Div([  # tabs of graphs
                     dcc.Tabs(id="graph-custom-tabs", children=[
-                        dcc.Tab(label='Battery', children=[
+                        dcc.Tab(label='Thermal', children=[
                             dcc.Graph(
-                                id='battery_graph', className='graph-style', 
+                                id='thermal-graph', className='graph-style', 
                                 figure={
                                     'data': [],
                                     'layout': go.Layout(
-                                        title='Battery Voltage & SOC',
+                                        title='Temperature',
                                         autosize=True,
                                         legend_orientation='h',
                                         legend=dict(x=0.2, y=-0.05),
@@ -906,198 +821,10 @@ def layout(app):
                                 }
                             )
                         ]),
-                        dcc.Tab(label='Load', children=[
-                            dcc.Graph(
-                                id='load_graph', className='graph-style', 
-                                figure={
-                                    'data': [],
-                                    'layout': go.Layout(
-                                        title='Load Profile',
-                                        legend_orientation='h',
-                                        legend=dict(x=0.2, y=-0.04),
-                                        margin=dict(l=50, r=50, t=50, b=75),
-                                        xaxis=dict(domain=[0.1, 0.95], title='Orbit Time (minutes)'),
-                                        yaxis=dict(
-                                            title='V', titlefont=dict(
-                                                color='rgb(255, 0, 0)'
-
-                                            ),
-                                            tickfont=dict(
-                                                color='rgb(255, 0, 0)'
-                                            )
-                                        ),
-                                        yaxis2=dict(
-                                            title='Power (W)',
-                                            titlefont=dict(
-                                                color='rgb(0, 255, 100)'
-                                            ),
-                                            tickfont=dict(
-                                                color='rgb(0, 255, 100)'
-                                            ),
-                                            overlaying='y',
-                                            side='right',
-                                            position=0.975
-
-                                        ),
-                                        yaxis3=dict(title="Current (A)",
-                                                    titlefont=dict(
-                                                        color="rgb(0,0,255)"
-                                                    ),
-                                                    tickfont=dict(
-                                                        color="rgb(0,0,255)"
-                                                    ),
-                                                    anchor="free",
-                                                    overlaying="y",
-                                                    side="left",
-                                                    position=0.04)
-                                    )
-                                }
-                            )
-                        ]),
-                        dcc.Tab(label='Solar Array', children=[
-                            dcc.Graph(
-                                id='solar_graph', className='graph-style',
-                                figure={
-                                    'data': [],
-                                'layout': go.Layout(
-                                    title='Solar Array Profile',
-                                    legend_orientation='h',
-                                    legend=dict(x=0.2, y=-0.04),
-                                    margin=dict(l=50, r=75, t=50, b=75),
-                                    xaxis=dict(domain=[0.1, 1], title='Orbit Time (minutes)'),
-                                    yaxis=dict(
-                                        title='V', titlefont=dict(
-                                            color='rgb(255, 0, 0)'
-
-                                        ),
-                                        tickfont=dict(
-                                            color='rgb(255, 0, 0)'
-                                        )
-                                    ),
-                                    yaxis2=dict(
-                                        title='Power (W)',
-                                        titlefont=dict(
-                                            color='rgb(255, 0, 255)'
-                                        ),
-                                        tickfont=dict(
-                                            color='rgb(255, 0, 255)'
-                                        ),
-                                        overlaying='y',
-                                        side='right'
-
-                                    ),
-                                    yaxis3=dict(title="Current (A)",
-                                                titlefont=dict(
-                                                    color="rgb(0,0,255)"
-                                                ),
-                                                tickfont=dict(
-                                                    color="rgb(0,0,255)"
-                                                ),
-                                                anchor="free",
-                                                overlaying="y",
-                                                side="left",
-                                                position=0.04)
-                                )
-                                }
-                            )
-                        ]),
-                        dcc.Tab(label='IV Curves', children=[
-                            dcc.Graph(
-                                id='solarIV_graph',
-                                className='graph-style',
-                                figure={
-                        'data': [],
-                        'layout': go.Layout(
-                            title='Solar IV',
-                            legend_orientation='h',
-                            legend=dict(x=0.2, y=-0.08),
-                            margin=dict(l=75, r=75, t=50, b=75),
-                            xaxis=dict(domain=[0, 1], title=''),
-                            yaxis=dict(
-                                title='Current (A)', titlefont=dict(
-                                    color='rgb(0,0,255)'
-
-                                ),
-                                tickfont=dict(
-                                    color='rgb(0,0,255)'
-                                )),
-                            yaxis2=dict(
-                                title='Power (W)', titlefont=dict(
-                                    color='rgb(255,0,0)'
-
-                                ),
-                                tickfont=dict(
-                                    color='rgb(255,0,0)'
-                                ), overlaying='y',
-                                side='right'
-                            )
-                        )
-
-                    }
-                            )
-                        ])
+                        
                     ], vertical=True),
                 ], id='graph-tab-container', className='pretty_container'),
-
-                html.Div([  # system graph
-                    dcc.Graph(
-                        id='system_graph', className='graph-style',
-                        style = {'width': '100%'},
-                        figure={'data': [],
-        'layout': go.Layout(
-            title='Overall System',
-            legend_orientation='h',
-            legend=dict(x=0.2, y=-0.2),
-            margin=dict(l=50, r=50, t=50, b=100),
-            autosize=True,
-            xaxis=dict(domain=[0.1, 0.90], title='Orbit Time (minutes)', position=0.1),
-            yaxis=dict(
-                title='V', titlefont=dict(
-                    color='rgb(255, 0, 0)'
-
-                ),
-                tickfont=dict(
-                    color='rgb(255, 0, 0)'
-                )
-            ),
-            yaxis2=dict(
-                title='%',
-                titlefont=dict(
-                    color='rgb(0, 255, 100)'
-                ),
-                tickfont=dict(
-                    color='rgb(0, 255, 100)'
-                ),
-                overlaying='y',
-                side='right'
-
-            ),
-            yaxis3=dict(title="Current (A)",
-                        titlefont=dict(
-                            color="rgb(0,0,255)"
-                        ),
-                        tickfont=dict(
-                            color="rgb(0,0,255)"
-                        ),
-                        anchor="free",
-                        overlaying="y",
-                        side="left",
-                        position=0.04),
-            yaxis4=dict(title="Power (W)", titlefont=dict(
-                color="rgb(255,0,255)"
-            ),
-                        tickfont=dict(
-                            color="rgb(255,0,255)"
-                        ),
-                        anchor="free",
-                        overlaying="y",
-                        side="right",
-                        position=0.98)
-        )}
-                    ),
-                ], id='sys-graph', className='pretty_container'),
             ], className='block-display')
-
         ], className='flex-display'),
 
         # modal popouts for each tab section
