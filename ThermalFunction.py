@@ -99,4 +99,4 @@ def ThermalFunction(
     plt.show()
 
 
-ThermalFunction(500000, 0.05, 0.85, 0.65, 880, 3970, 373, 30, 90)
+ThermalFunction(418500, 0.05, .85, .65, 880, 3970, 273, 35, 92.68)

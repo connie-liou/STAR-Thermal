@@ -9,7 +9,7 @@ import model.components.orbitalBody
 import model.components.orientation
 import model.components.perifocalCoordinates
 import model.components.physicalProperties
-import model.components.radiationFactor
+import matplotlib
 import model.components.solarPosition
 import model.components.spacecraftConfiguration
 import model.components.timingConfiguration
