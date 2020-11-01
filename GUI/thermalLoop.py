@@ -2,6 +2,15 @@ import sys
 sys.path.append("/model/")
 from thermalModel import *
 import dash_html_components as html 
+from dash.exceptions import PreventUpdate
+
+from model.components.nodeSet import NodeSet
+from model.components.orbit import Orbit
+from model.components.orbitalBody import OrbitalBody
+from model.components.orientation import Orientation
+from model.components.solarPosition import SolarPosition
+from model.components.spacecraftConfiguration import SpacecraftConfiguration
+from model.components.timingConfiguration import TimingConfiguration
 
 def thermalLoop(app):
     @app.callback(
@@ -43,5 +52,16 @@ def thermalLoop(app):
         Input('right-ascension-sun','value'),
         Input('declination-sun','value')]
     )
-def thermalLooping(clicks,):
+def thermalLooping(clicks, num-nodes, node-table-rows, node-table-cols, radiation-table-rows, radiation-table-cols, conductance-table-rows,
+         conductance-table-cols, use-simple-orbit, orbit-type, start-time, end-time, timestep, period, eclipse-length, eclipse-start, 
+         eclipse-end, start-time-complex, end-time-complex, timestep-complex, spacecraft-config, inclination, right-ascension, periapsis, 
+         max-altitude, eccentricity, z-initial-orient, spacecraft-axis, additional-rotation, orbit-body-radius, grav-param, blackbody-temp,
+         orbiting-albedo, solar-const-atm, right-ascension-sun, declination-sun):
     print('yeah im getting there')
+
+    #TODO: Create all object properties reading in GUI values
+    # Create Thermal Model object, output nodeTemperatures array
+    # Graph array in GUI
+
+    thermalModel = ThermalModel()
+    raise PreventUpdate
