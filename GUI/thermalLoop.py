@@ -1,6 +1,8 @@
 import sys
 sys.path.append("/model/")
-from thermalModel import *
+from thermalModel import ThermalModel
+import dash
+from dash.dependencies import *
 import dash_html_components as html 
 from dash.exceptions import PreventUpdate
 
@@ -52,16 +54,16 @@ def thermalLoop(app):
         Input('right-ascension-sun','value'),
         Input('declination-sun','value')]
     )
-def thermalLooping(clicks, num-nodes, node-table-rows, node-table-cols, radiation-table-rows, radiation-table-cols, conductance-table-rows,
-         conductance-table-cols, use-simple-orbit, orbit-type, start-time, end-time, timestep, period, eclipse-length, eclipse-start, 
-         eclipse-end, start-time-complex, end-time-complex, timestep-complex, spacecraft-config, inclination, right-ascension, periapsis, 
-         max-altitude, eccentricity, z-initial-orient, spacecraft-axis, additional-rotation, orbit-body-radius, grav-param, blackbody-temp,
-         orbiting-albedo, solar-const-atm, right-ascension-sun, declination-sun):
-    print('yeah im getting there')
+    def thermalLooping(clicks, num_nodes, node_table_rows, node_table_cols, radiation_table_rows, radiation_table_cols, conductance_table_rows,
+            conductance_table_cols, use_simple_orbit, orbit_type, start_time, end_time, timestep, period, eclipse_length, eclipse_start, 
+            eclipse_end, start_time_complex, end_time_complex, timestep_complex, spacecraft_config, inclination, right_ascension, periapsis, 
+            max_altitude, eccentricity, z_initial_orient, spacecraft_axis, additional_rotation, orbit_body_radius, grav_param, blackbody_temp,
+            orbiting_albedo, solar_const_atm, right_ascension_sun, declination_sun):
+        print('yeah im getting there')
 
-    #TODO: Create all object properties reading in GUI values
-    # Create Thermal Model object, output nodeTemperatures array
-    # Graph array in GUI
+        #TODO: Using user input values
+        # Create Thermal Model object, output nodeTemperatures array
+        # Graph array in GUI 
 
-    thermalModel = ThermalModel()
-    raise PreventUpdate
+        thermalModel = ThermalModel()
+        raise PreventUpdate
