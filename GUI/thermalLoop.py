@@ -67,5 +67,6 @@ def thermalLoop(app):
 
         solarPosition = SolarPosition(right_ascension, declination_sun)
         orbit = Orbit(inclination,rightAscensionOfAscendingNode,argumentOfPeriapsis,maxAltitude,eccentricity,orbitalBody)
+        timingconfiguration = TimingConfiguration(endtime,timestep)
         thermalModel = ThermalModel()
         raise PreventUpdate
