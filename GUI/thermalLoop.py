@@ -61,9 +61,11 @@ def thermalLoop(app):
             orbiting_albedo, solar_const_atm, right_ascension_sun, declination_sun):
         print('yeah im getting there')
 
-        #TODO: Using user input values
+        # TODO: Using user input values
         # Create Thermal Model object, output nodeTemperatures array
-        # Graph array in GUI 
+        # Graph array in GUI
+
+        solarPosition = SolarPosition(right_ascension, declination_sun)
 
         thermalModel = ThermalModel()
         raise PreventUpdate
