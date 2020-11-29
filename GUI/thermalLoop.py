@@ -69,4 +69,5 @@ def thermalLoop(app):
         orbit = Orbit(inclination,rightAscensionOfAscendingNode,argumentOfPeriapsis,maxAltitude,eccentricity,EARTH_ORBITAL_BODY)
         timingconfiguration = TimingConfiguration(endtime,timestep)
         thermalModel = ThermalModel()
+        physicalProperties = physicalProperties(surfaceArea, thickness, density, specificHeat, volume, mass, thermalMass)
         raise PreventUpdate
