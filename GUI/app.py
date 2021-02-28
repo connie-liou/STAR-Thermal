@@ -41,14 +41,14 @@ layout(app)
 
 
 # CallBacks #####################################################################################################
-@app.callback(
-    [Output(component_id='simple-orbit-container', component_property='style')],
-    [Input('run_button', 'n_clicks')]
-)
-def printSomething(clicks):
-    print("This printed something")
-    print(f'clicks: {clicks}')
-    return [{'display': 'none'}]
+# @app.callback(
+#     [Output(component_id='simple-orbit-container', component_property='style')],
+#     [Input('run_button', 'n_clicks')]
+# )
+# def printSomething(clicks):
+#     print("This printed something")
+#     print(f'clicks: {clicks}')
+#     return [{'display': 'none'}]
 
 
 @app.callback([Output('node-table', 'columns'), Output('radiation-table', 'columns'),
