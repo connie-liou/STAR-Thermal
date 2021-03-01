@@ -64,7 +64,7 @@ def addNodes(numNodes, radActive, condActive, nodeCols, radCols, radRows, condCo
     if prevNumNodes is None:
         prevNumNodes = 0
 
-    if (numNodes == prevNumNodes):
+    if numNodes == prevNumNodes:
         rad_df = pd.DataFrame(radRows)
         rad_arr = rad_df.values[:, 1:]
         isRadSymm = True
