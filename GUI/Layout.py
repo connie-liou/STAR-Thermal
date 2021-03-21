@@ -9,109 +9,128 @@ import dash_html_components as html
 import dash_table
 import plotly.graph_objs as go
 
-
 '''
 This file contains the HTML layout of the application.
 '''
-def layout(app):
-    tempData = go.Scatter(
-        x=[0],
-        y=[0],
-        name='Temperature',
-        mode='lines', line=dict(color='rgb(255,0,0)')
-    )
 
-    # systempath = os.getcwd() + '/Presets/System/'
-    # batterypath = os.getcwd() + '/Presets/Battery/'
-    # loadpath = os.getcwd() + '/Presets/Load/'
-    # orbitpath = os.getcwd() + '/Presets/Orbit/'
-    # solarpath = os.getcwd() + '/Presets/Solar/'
-    # systemfiles = [f for f in listdir(systempath) if isfile(join(systempath, f))]
-    # batteryfiles = [f for f in listdir(batterypath) if isfile(join(batterypath, f))]
-    # loadfiles = [f for f in listdir(loadpath) if isfile(join(loadpath, f))]
-    # orbitfiles = [f for f in listdir(orbitpath) if isfile(join(orbitpath, f))]
-    # solarfiles = [f for f in listdir(solarpath) if isfile(join(solarpath, f))]
-    # optionList = []
-    # optionList.append({'label': 'Custom...', 'value': 'custom'})
-    # optionList.append({'label': '=========System=========', 'value': '', 'disabled': True})
-    # for i in systemfiles:
-    #     optionList.append({'label': i, 'value': systempath + i})
-    # optionList.append({'label': '=========Battery========', 'value': '', 'disabled': True})
-    # for i in batteryfiles:
-    #     optionList.append({'label': i, 'value': batterypath + i})
-    # optionList.append({'label': '=========Load===========', 'value': '', 'disabled': True})
-    # for i in loadfiles:
-    #     optionList.append({'label': i, 'value': loadpath + i})
-    # optionList.append({'label': '=========Orbit==========', 'value': '', 'disabled': True})
-    # for i in orbitfiles:
-    #     optionList.append({'label': i, 'value': orbitpath + i})
-    # optionList.append({'label': '======Solar Array=======', 'value': '', 'disabled': True})
-    # for i in solarfiles:
-    #     optionList.append({'label': i, 'value': solarpath + i})
+
+def layout(app):
+    # graph = dcc.Graph(id='thermal-graph',
+    #                   className='graph-style',
+    #                   figure={'data': [],
+    #                           'layout': go.Layout(
+    #                               title='Temperature',
+    #                               autosize=True,
+    #                               legend_orientation='h',
+    #                               legend=dict(x=0.2,
+    #                                           y=-0.05),
+    #                               margin=dict(l=50, r=50, t=50, b=50),
+    #                               xaxis=dict(
+    #                                   domain=[0.1, 0.9],
+    #                                   title='Orbit Time (minutes)',
+    #                                   position=0),
+    #                               yaxis=dict(title='V',
+    #                                          titlefont=dict(
+    #                                              color='rgb(255, 0, 0)'),
+    #                                          tickfont=dict(
+    #                                              color='rgb(255, 0, 0)')),
+    #                               yaxis2=dict(title='%',
+    #                                           titlefont=dict(
+    #                                               color='rgb(0, 255, 100)'),
+    #                                           tickfont=dict(
+    #                                               color='rgb(0, 255, 100)'),
+    #                                           overlaying='y',
+    #                                           side='right'),
+    #                               yaxis3=dict(
+    #                                   title="Current (A)",
+    #                                   titlefont=dict(
+    #                                       color="rgb(0,0,255)"),
+    #                                   tickfont=dict(
+    #                                       color="rgb(0,0,255)"),
+    #                                   anchor="free",
+    #                                   overlaying="y",
+    #                                   side="left",
+    #                                   position=0.05),
+    #                               yaxis4=dict(title="Ahr",
+    #                                           titlefont=dict(
+    #                                               color="rgb(210,194,49)"),
+    #                                           tickfont=dict(
+    #                                               color="rgb(210,194,49)"),
+    #                                           anchor="free",
+    #                                           overlaying="y",
+    #                                           side="right",
+    #                                           position=0.95))})
+    graph2 = dcc.Graph(id='thermal-graph')
     app.layout = html.Div([
-        html.Div(id='junk'), 
-        html.Div(id='prev_clicks_run', hidden=True), 
-        html.Div(id = 'prev_clicks_import', hidden = True),
-        html.Div(id = 'prev_num_sides', hidden = True),
-        html.Div(id = 'prev_num_EOL', hidden = True),
-        html.Div(id = 'prev_num_nodes', hidden = True),
+        html.Div(id='junk'),
+        html.Div(id='prev_clicks_run', hidden=True),
+        html.Div(id='prev_clicks_import', hidden=True),
+        html.Div(id='prev_num_sides', hidden=True),
+        html.Div(id='prev_num_EOL', hidden=True),
+        html.Div(id='prev_num_nodes', hidden=True),
         dcc.ConfirmDialog(
             id='exportRaw'
         ),
         dcc.ConfirmDialog(
             id='confirm-zerodivision-error',
             message='Please fill out all fields or check for zero values',
-        ),   
+        ),
         html.Div([
-            
+
             html.Div([
                 html.Div([
                     # html.Img(src=app.get_asset_url('nasa-logo.png'), id='logo'),
-                    html.Img(src=app.get_asset_url('eps design tool logo.png'), id = 'title'),
-                ],id = 'logo-title-header'),
+                    html.Img(src=app.get_asset_url('eps design tool logo.png'), id='title'),
+                ], id='logo-title-header'),
                 html.Div([
                     html.Div([
-                        html.Img(src=app.get_asset_url('show.png'), id = 'show-tabs', className = 'icon'), 
+                        html.Img(src=app.get_asset_url('show.png'), id='show-tabs', className='icon'),
                         html.Div(html.P('Show Tabs')),
-                        ], id = 'show-container', className = 'input-container'),
+                    ], id='show-container', className='input-container'),
                     html.Div([
-                        html.Img(src=app.get_asset_url('collapse.png'), id = 'hide-tabs', className = 'icon'),
+                        html.Img(src=app.get_asset_url('collapse.png'), id='hide-tabs', className='icon'),
                         html.Div(html.P('Hide Tabs')),
-                        ], id = 'hide-container', className = 'input-container'),
+                    ], id='hide-container', className='input-container'),
                 ]),
             ]),
-            html.Div([ #naming
+            html.Div([  # naming
                 html.Div([
-                    html.Div([html.Img(src=app.get_asset_url('satellite icon.png'), className='icon'), html.P('System:', id='systemName')], className = 'input-container magnify'),
-                    html.Div(children=[html.Img(src=app.get_asset_url('battery icon.png'), className='icon'), html.P('Battery:', id='batteryName')], className = 'input-container magnify'),
-                    html.Div(children=[html.Img(src=app.get_asset_url('flash icon.png'), className='icon'), html.P('Load:', id='loadName')], className = 'input-container magnify')
+                    html.Div([html.Img(src=app.get_asset_url('satellite icon.png'), className='icon'),
+                              html.P('System:', id='systemName')], className='input-container magnify'),
+                    html.Div(children=[html.Img(src=app.get_asset_url('battery icon.png'), className='icon'),
+                                       html.P('Battery:', id='batteryName')], className='input-container magnify'),
+                    html.Div(children=[html.Img(src=app.get_asset_url('flash icon.png'), className='icon'),
+                                       html.P('Load:', id='loadName')], className='input-container magnify')
                 ], id='left-name'),
                 html.Div([
-                    html.Div([html.Img(src=app.get_asset_url('orbit.png'), className='icon'), html.P('Orbit:', id='orbitName')], className = 'input-container magnify'),
-                    html.Div([html.Img(src=app.get_asset_url('solar panel.png'), className='icon'), html.P('Solar Array:', id='solarName')], className = 'input-container magnify')
-                ], id='right-name') 
+                    html.Div([html.Img(src=app.get_asset_url('orbit.png'), className='icon'),
+                              html.P('Orbit:', id='orbitName')], className='input-container magnify'),
+                    html.Div([html.Img(src=app.get_asset_url('solar panel.png'), className='icon'),
+                              html.P('Solar Array:', id='solarName')], className='input-container magnify')
+                ], id='right-name')
             ], id='name-container'),
             html.Div([
-                html.Div([dcc.Dropdown(id='input_dropdown'),]),
+                html.Div([dcc.Dropdown(id='input_dropdown'), ]),
                 html.Div([
-                    html.Button('Update', id='import-button', hidden = True, className='button')
-                ], id = 'import-button-container', style = {'display':'none'}),
-            ], style = {'padding':'none'}),
-            
+                    html.Button('Update', id='import-button', hidden=True, className='button')
+                ], id='import-button-container', style={'display': 'none'}),
+            ], style={'padding': 'none'}),
+
             html.Div([
                 dcc.Upload(
-                id='import-upload',
-                children=html.Div([
-                    'Drag and Drop or ',
-                    html.A('Select Files')
+                    id='import-upload',
+                    children=html.Div([
+                        'Drag and Drop or ',
+                        html.A('Select Files')
                     ])
                 )
-            ], id = 'import-upload-container', style={'display':'none'}),
-            
-            
-        ], className = 'input-container', id = 'header'),
+            ], id='import-upload-container', style={'display': 'none'}),
 
-        html.Div(children=[dcc.Loading(id='loadingRunButton', type='default', children=[html.A("Run", className='runButton', id='run_button')]), ], className='sticky', id='run-container'),
+        ], className='input-container', id='header'),
+
+        html.Div(children=[dcc.Loading(id='loadingRunButton', type='default',
+                                       children=[html.A("Run", className='runButton', id='run_button')]), ],
+                 className='sticky', id='run-container'),
         # html.Div([html.Img(src=app.get_asset_url('blank-nasa-logo.png'), id='logo-button')]),
         html.Div([  # row with tabs and graphs
             # tabs
@@ -120,68 +139,69 @@ def layout(app):
                     #######################################################################################################
                     dcc.Tab(label='Nodes', children=[
                         html.Div([
-                            html.Div([html.H6("Input nodes"),],),
+                            html.Div([html.H6("Input nodes"), ], ),
                             html.Div([daq.NumericInput(
-                                        id='num-nodes',
-                                        label='Number of Nodes',
-                                        labelPosition='top',
-                                        max=100,
-                                        min=1,
-                                        value=2,
-                                    ),
-                                    ]),
-                            
+                                id='num-nodes',
+                                label='Number of Nodes',
+                                labelPosition='top',
+                                max=100,
+                                min=1,
+                                value=2,
+                            ),
+                            ]),
+
                             html.Div([
                                 dash_table.DataTable(
-                                    id = 'node-table',
+                                    id='node-table',
                                     columns=[{
-                                            'name': 'Properties',
-                                            'id': 'node-column',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': False,
-                                            'editable': False
-                                        }, {
-                                            'name': 'Node 1',
-                                            'id': 'node-1',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }, {
-                                            'name': 'Node 2',
-                                            'id': 'node-2',
-                                            'type': 'numeric',
-                                            'deletable': False,
-                                            'renamable': False,
-                                            'clearable': True
-                                        }],
-                                        data=[
-                                            {'node-column':'Name'},
-                                            {'node-column':'Initial Temp (K)'},
-                                            {'node-column':'Surface Area (m^2)'},
-                                            {'node-column':'Thickness(m)'},
-                                            {'node-column':'Density(kg/m^3)'},
-                                            {'node-column':'Specific Heat(J/kg/K)'},
-                                            {'node-column':'absorptivity'},
-                                            {'node-column':'emissivity'},
-                                            {'node-column':'Heat Dissipation (W)'},],
-                                        editable=True,
-                                        row_deletable=False,
-                                        export_headers='display',
-                                        style_cell={
-                                            'color': 'black',
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                            'maxWidth': 50,
-                                        }
+                                        'name': 'Properties',
+                                        'id': 'node-column',
+                                        'deletable': False,
+                                        'renamable': False,
+                                        'clearable': False,
+                                        'editable': False
+                                    }, {
+                                        'name': 'Node 1',
+                                        'id': 'node-1',
+                                        'type': 'numeric',
+                                        'deletable': False,
+                                        'renamable': False,
+                                        'clearable': True
+                                    }, {
+                                        'name': 'Node 2',
+                                        'id': 'node-2',
+                                        'type': 'numeric',
+                                        'deletable': False,
+                                        'renamable': False,
+                                        'clearable': True
+                                    }],
+                                    data=[
+                                        {'node-column': 'Name'},
+                                        {'node-column': 'Initial Temp (K)'},
+                                        {'node-column': 'Surface Area (m^2)'},
+                                        {'node-column': 'Thickness(m)'},
+                                        {'node-column': 'Density(kg/m^3)'},
+                                        {'node-column': 'Specific Heat(J/kg/K)'},
+                                        {'node-column': 'absorptivity'},
+                                        {'node-column': 'emissivity'},
+                                        {'node-column': 'Heat Dissipation (W)'}, ],
+                                    editable=True,
+                                    row_deletable=False,
+                                    export_headers='display',
+                                    style_cell={
+                                        'color': 'black',
+                                        'whiteSpace': 'normal',
+                                        'height': 'auto',
+                                        'maxWidth': 50,
+                                    }
                                 )
-                                ], className='table-container', id='node-table-container'),
-                            
+                            ], className='table-container', id='node-table-container'),
+
                             html.Hr(),
                             html.Div([
                                 html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='general-help-button'),
+                                html.Img(src=app.get_asset_url('help.png'), className='helpButton',
+                                         id='general-help-button'),
                             ], className='help-button-container')
                         ], className='tab-container')
                     ], className='custom-tab')
@@ -192,61 +212,63 @@ def layout(app):
                             html.Div([
                                 html.Div([
                                     dash_table.DataTable(
-                                        id = 'radiation-table',
-                                        
-                                            columns=[
-                                                {"name": "Surface #", "id": "surface-number"},
-                                                {
-                                                    'name': 'Surface 1',
-                                                    'id': 'radiation-1',
-                                                    'type': 'numeric',
-                                                    'deletable': False,
-                                                    'renamable': False,
-                                                    'clearable': True
-                                                },
-                                                {
-                                                    'name': 'Surface 2',
-                                                    'id': 'radiation-2',
-                                                    'type': 'numeric',
-                                                    'deletable': False,
-                                                    'renamable': False,
-                                                    'clearable': True
-                                                },
-                                            ],
-                                            data=[
-                                                {'surface-number': 'Surface 1', 'radiation-1': 0, 'radiation-2':0},
-                                                {'surface-number': 'Surface 2', 'radiation-1': 0, 'radiation-2':0}
-                                                ],
-                                            merge_duplicate_headers=True,
-                                            editable=True,
-                                            row_deletable=False,
-                                            export_headers='display',
-                                            style_cell={
-                                                'color': 'black',
-                                                'whiteSpace': 'normal',
-                                                'height': 'auto',
-                                                'maxWidth': 50,
+                                        id='radiation-table',
+
+                                        columns=[
+                                            {"name": "Surface #", "id": "surface-number"},
+                                            {
+                                                'name': 'Surface 1',
+                                                'id': 'radiation-1',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
                                             },
-                                            # style_data_conditional=[
-                                            #     {
-                                            #         'if': {
-                                            #             'filter_query': '{{{col}}} > 5',
-                                            #             'column_id': '{Surface 1}'
-                                            #         },
-                                            #     'backgroundColor': 'salmon',
-                                            #     } 
-                                            # ]
+                                            {
+                                                'name': 'Surface 2',
+                                                'id': 'radiation-2',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
+                                            },
+                                        ],
+                                        data=[
+                                            {'surface-number': 'Surface 1', 'radiation-1': 0, 'radiation-2': 0},
+                                            {'surface-number': 'Surface 2', 'radiation-1': 0, 'radiation-2': 0}
+                                        ],
+                                        merge_duplicate_headers=True,
+                                        editable=True,
+                                        row_deletable=False,
+                                        export_headers='display',
+                                        style_cell={
+                                            'color': 'black',
+                                            'whiteSpace': 'normal',
+                                            'height': 'auto',
+                                            'maxWidth': 50,
+                                        },
+                                        # style_data_conditional=[
+                                        #     {
+                                        #         'if': {
+                                        #             'filter_query': '{{{col}}} > 5',
+                                        #             'column_id': '{Surface 1}'
+                                        #         },
+                                        #     'backgroundColor': 'salmon',
+                                        #     }
+                                        # ]
                                     )
-                                ],className='table-container'),
-                            ], id = 'radiation-table-container',className='tab-container '),
-                            html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id = 'rad-matrix-error',hidden=True),
+                                ], className='table-container'),
+                            ], id='radiation-table-container', className='tab-container '),
+                            html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id='rad-matrix-error',
+                                     hidden=True),
                             html.Hr(),
                             html.Div([
                                 html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='battery-help-button'),
+                                html.Img(src=app.get_asset_url('help.png'), className='helpButton',
+                                         id='battery-help-button'),
                             ], className='help-button-container')
-                        ],className='tab-container')
-                    ], className='custom-tab' )
+                        ], className='tab-container')
+                    ], className='custom-tab')
                     ##################################################################################################
                     , dcc.Tab(label='Conductance', children=[
                         html.Div([
@@ -254,49 +276,53 @@ def layout(app):
                                 html.H6('Conductance between nodes'),
                                 html.Div([
                                     dash_table.DataTable(
-                                        id = 'conductance-table',
-                                            columns=[
-                                                {"name": "Surface #", "id": 'surface-conductance-number'},
-                                                {
-                                                    'name': 'Surface 1',
-                                                    'id': 'conductance-1',
-                                                    'type': 'numeric',
-                                                    'deletable': False,
-                                                    'renamable': False,
-                                                    'clearable': True
-                                                },
-                                                {
-                                                    'name': 'Surface 2',
-                                                    'id': 'conductance-2',
-                                                    'type': 'numeric',
-                                                    'deletable': False,
-                                                    'renamable': False,
-                                                    'clearable': True
-                                                },
-                                            ],
-                                                data=[
-                                                    {'surface-conductance-number': 'Surface 1', 'conductance-1': 0, 'conductance-2':0},
-                                                    {'surface-conductance-number': 'Surface 2', 'conductance-1': 0, 'conductance-2':0}  
-                                                    
-                                                    ],
-                                                merge_duplicate_headers=True,
-                                                editable=True,
-                                                row_deletable=False,
-                                                export_headers='display',
-                                                style_cell={
-                                                    'color': 'black',
-                                                    'whiteSpace': 'normal',
-                                                    'height': 'auto',
-                                                    'maxWidth': 50,
-                                                }
+                                        id='conductance-table',
+                                        columns=[
+                                            {"name": "Surface #", "id": 'surface-conductance-number'},
+                                            {
+                                                'name': 'Surface 1',
+                                                'id': 'conductance-1',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
+                                            },
+                                            {
+                                                'name': 'Surface 2',
+                                                'id': 'conductance-2',
+                                                'type': 'numeric',
+                                                'deletable': False,
+                                                'renamable': False,
+                                                'clearable': True
+                                            },
+                                        ],
+                                        data=[
+                                            {'surface-conductance-number': 'Surface 1', 'conductance-1': 0,
+                                             'conductance-2': 0},
+                                            {'surface-conductance-number': 'Surface 2', 'conductance-1': 0,
+                                             'conductance-2': 0}
+
+                                        ],
+                                        merge_duplicate_headers=True,
+                                        editable=True,
+                                        row_deletable=False,
+                                        export_headers='display',
+                                        style_cell={
+                                            'color': 'black',
+                                            'whiteSpace': 'normal',
+                                            'height': 'auto',
+                                            'maxWidth': 50,
+                                        }
                                     )
-                                ],className='table-container'),
-                            ], id = 'conductance-table-container'),
-                            html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id = 'cond-matrix-error',hidden=True),
+                                ], className='table-container'),
+                            ], id='conductance-table-container'),
+                            html.Div([html.H6('Check Matrix Symmetry', style={'color': 'red'})], id='cond-matrix-error',
+                                     hidden=True),
                             html.Hr(),
                             html.Div([
                                 html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='load-help-button'),
+                                html.Img(src=app.get_asset_url('help.png'), className='helpButton',
+                                         id='load-help-button'),
                             ], className='help-button-container')
                         ], className='tab-container')
                     ], className='custom-tab')
@@ -306,22 +332,22 @@ def layout(app):
                             html.Div([
                                 html.H6('Select Orbit Model'),
                                 dcc.RadioItems(
-                                        options=[
-                                            {'label': 'Simple', 'value': 'Simple'},
-                                            {'label': 'Complex', 'value': 'Complex'}
-                                        ],
-                                        value='Simple',
-                                        id='use-simple-orbit'
+                                    options=[
+                                        {'label': 'Simple', 'value': 'Simple'},
+                                        {'label': 'Complex', 'value': 'Complex'}
+                                    ],
+                                    value='Simple',
+                                    id='use-simple-orbit'
                                 ),
                             ], className='save-container'),
-                            html.Hr(),                        
-                            #Simple Orbit Container
+                            html.Hr(),
+                            # Simple Orbit Container
                             html.Div([
                                 html.Div([
                                     html.P("Orbit Type", className='sc-bwzfXH.eYbLCt orbit-label'),
                                     dcc.Dropdown(
                                         id='orbit-type',
-                                        className = 'orbit-dropdown',
+                                        className='orbit-dropdown',
                                         options=[
                                             {'label': 'L1', 'value': 'L1'}, {'label': 'L2', 'value': 'L2'},
                                             {'label': 'LEO', 'value': 'LEO'}],
@@ -335,13 +361,13 @@ def layout(app):
                                             [
                                                 dbc.Label("Start Time (mins)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 1000000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=1000000000,
                                                     step=0.0001,
-                                                    id = 'start-time',
+                                                    id='start-time',
                                                     value=0,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
                                     ]),
@@ -350,13 +376,13 @@ def layout(app):
                                             [
                                                 dbc.Label("End Time (mins)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 10000000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000000,
                                                     step=0.0001,
-                                                    id = 'end-time',
+                                                    id='end-time',
                                                     value=600,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
                                     ]),
@@ -365,13 +391,13 @@ def layout(app):
                                             [
                                                 dbc.Label("Time Interval (mins)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 100000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=100000000,
                                                     step=0.0001,
-                                                    id = 'timestep',
+                                                    id='timestep',
                                                     value=1,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
                                     ]),
@@ -382,13 +408,13 @@ def layout(app):
                                             [
                                                 dbc.Label("Orbit Period (mins)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 10000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000,
                                                     step=0.0001,
-                                                    id = 'period',
+                                                    id='period',
                                                     value=92,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
                                     ]),
@@ -397,13 +423,13 @@ def layout(app):
                                             [
                                                 dbc.Label("Eclipse Length (mins)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 10000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000,
                                                     step=0.0001,
-                                                    id = 'eclipse-length',
+                                                    id='eclipse-length',
                                                     value=31,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
                                     ]),
@@ -414,13 +440,13 @@ def layout(app):
                                             [
                                                 dbc.Label("Eclipse Start Time (mins)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 100000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=100000000,
                                                     step=0.0001,
-                                                    id = 'eclipse-start',
+                                                    id='eclipse-start',
                                                     value=10,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
                                     ]),
@@ -429,332 +455,333 @@ def layout(app):
                                             [
                                                 dbc.Label("Eclipse End Time (mins)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 10000000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000000,
                                                     step=0.0001,
-                                                    id = 'eclipse-end',
+                                                    id='eclipse-end',
                                                     value=100,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
                                     ]),
                                 ], id='constant-orbit-container', className='save-container'),
-                            ], id = 'simple-orbit-container', className = 'save-container'),
-                            
-                            
-                            html.Div([ #Complex Orbit Container
-                                
-                                    
-                                    html.Div([ #Start/End Times row
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Start Time (mins)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 1000000000, 
-                                                        step=0.0001,
-                                                        id = 'start-time-complex',
-                                                        value=0,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                        ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("End Time (mins)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 10000000000, 
-                                                        step=0.0001,
-                                                        id = 'end-time-complex',
-                                                        value=600,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                        ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Time Interval (mins)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 100000000, 
-                                                        step=0.0001,
-                                                        id = 'timestep-complex',
-                                                        value=1,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                        ]),
-                                    ], className='save-container'),
-                                    html.Div([
-                                        html.P("Spacecraft Configuration?", className='sc-bwzfXH.eYbLCt orbit-label'),
-                                        dcc.Dropdown(
-                                            id='spacecraft-config',
-                                            className='orbit-dropdown',
-                                            options=[
-                                                {'label': 'Rectangle', 'value': 'rect'}, {'label': 'Triangle', 'value': 'tri'},
-                                                {'label': 'Hexagonal', 'value': 'hex'}],
-                                            value='rect'
-                                        ),
-                                    ], className='orbit-container'),
-                                    
-                                    html.H6('Orbital Elements'),
-                                    html.Div([ #Orbital Elements cluster
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Inclination (deg)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = -360, 
-                                                        max = 360, 
-                                                        step=0.0001,
-                                                        id = 'inclination',
-                                                        value=0,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                            ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Right Ascencion of Ascenidng node"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 10000000000, 
-                                                        step=0.0001,
-                                                        id = 'right-ascension',
-                                                        value=0,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                            ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Argument of Periapsis"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 100000000, 
-                                                        step=0.0001,
-                                                        id = 'periapsis',
-                                                        value=1,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                            ]),
+                            ], id='simple-orbit-container', className='save-container'),
 
-                                    ], className='save-container'),
+                            html.Div([  # Complex Orbit Container
+
+                                html.Div([  # Start/End Times row
                                     html.Div([
-                                        html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Start Time (mins)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=1000000000,
+                                                    step=0.0001,
+                                                    id='start-time-complex',
+                                                    value=0,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("End Time (mins)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000000,
+                                                    step=0.0001,
+                                                    id='end-time-complex',
+                                                    value=600,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Time Interval (mins)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=100000000,
+                                                    step=0.0001,
+                                                    id='timestep-complex',
+                                                    value=1,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                ], className='save-container'),
+                                html.Div([
+                                    html.P("Spacecraft Configuration?", className='sc-bwzfXH.eYbLCt orbit-label'),
+                                    dcc.Dropdown(
+                                        id='spacecraft-config',
+                                        className='orbit-dropdown',
+                                        options=[
+                                            {'label': 'Rectangle', 'value': 'rect'},
+                                            {'label': 'Triangle', 'value': 'tri'},
+                                            {'label': 'Hexagonal', 'value': 'hex'}],
+                                        value='rect'
+                                    ),
+                                ], className='orbit-container'),
+
+                                html.H6('Orbital Elements'),
+                                html.Div([  # Orbital Elements cluster
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Inclination (deg)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=-360,
+                                                    max=360,
+                                                    step=0.0001,
+                                                    id='inclination',
+                                                    value=0,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Right Ascencion of Ascenidng node"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000000,
+                                                    step=0.0001,
+                                                    id='right-ascension',
+                                                    value=0,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Argument of Periapsis"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=100000000,
+                                                    step=0.0001,
+                                                    id='periapsis',
+                                                    value=1,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+
+                                ], className='save-container'),
+                                html.Div([
+                                    html.Div([
                                         dbc.FormGroup(
                                             [
                                                 dbc.Label("Max Altitude (km)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 10000000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000000,
                                                     step=0.0001,
-                                                    id = 'max-altitude',
+                                                    id='max-altitude',
                                                     value=0,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
-                                        ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("eccentricity"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 1, 
-                                                        step=0.0001,
-                                                        id = 'eccentricity',
-                                                        value=1,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("eccentricity"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=1,
+                                                    step=0.0001,
+                                                    id='eccentricity',
+                                                    value=1,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
                                             ]),
+                                    ]),
+                                ], className='save-container'),
+
+                                html.H6('Orientation'),
+                                html.Div([
+                                    html.Div([
+                                        html.P("Z+ initial orientation", className='sc-bwzfXH.eYbLCt orbit-label'),
+                                        dcc.Dropdown(
+                                            id='z-initial-orient',
+                                            className='orbit-dropdown',
+                                            options=[
+                                                {'label': 'Sun', 'value': 'sun'}, {'label': 'Earth', 'value': 'Earth'}],
+                                            value='rect'
+                                        ),
+                                    ], className='orbit-container'),
+
+                                    html.Div([
+                                        html.P("About which Spacecraft axis?",
+                                               className='sc-bwzfXH.eYbLCt orbit-label'),
+                                        dcc.Dropdown(
+                                            id='spacecraft-axis',
+                                            className='orbit-dropdown',
+                                            options=[
+                                                {'label': 'X', 'value': 'X'}, {'label': 'Y', 'value': 'Y'},
+                                                {'label': 'Z', 'value': 'Z'}],
+                                            value='Z'
+                                        ),
+                                    ], className='orbit-container'),
+                                ], className='save-container'),
+                                html.Div([
+                                    dbc.FormGroup(
+                                        [
+                                            dbc.Label("Additional Rotation (deg per orbit)"),
+                                            dbc.Input(
+                                                type="number",
+                                                min=0,
+                                                max=10000000000,
+                                                step=0.0001,
+                                                id='additional-rotation',
+                                                value=0,
+                                                className='styled-numeric-input',
+                                                debounce=True)
                                         ]),
-                                    ], className='save-container'),
-                                    
-                                    html.H6('Orientation'),
+                                ]),
+
+                                html.H6('Orbiting Body'),
+                                html.Div([  # Orbiting body cluster
                                     html.Div([
-                                        html.Div([
-                                            html.P("Z+ initial orientation", className='sc-bwzfXH.eYbLCt orbit-label'),
-                                            dcc.Dropdown(
-                                                id='z-initial-orient',
-                                                className='orbit-dropdown',
-                                                options=[
-                                                    {'label': 'Sun', 'value': 'sun'}, {'label': 'Earth', 'value': 'Earth'}],
-                                                value='rect'
-                                            ),
-                                        ], className='orbit-container'),
-                                        
-                                        html.Div([
-                                            html.P("About which Spacecraft axis?", className='sc-bwzfXH.eYbLCt orbit-label'),
-                                            dcc.Dropdown(
-                                                id='spacecraft-axis',
-                                                className='orbit-dropdown',
-                                                options=[
-                                                    {'label': 'X', 'value': 'X'}, {'label': 'Y', 'value': 'Y'},
-                                                    {'label': 'Z', 'value': 'Z'}],
-                                                value='Z'
-                                            ),
-                                        ], className='orbit-container'),
-                                    ], className='save-container'),
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Radius (km)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=36000000000,
+                                                    step=0.0001,
+                                                    id='orbit-body-radius',
+                                                    value=0,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
                                     html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Additional Rotation (deg per orbit)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 10000000000, 
-                                                        step=0.0001,
-                                                        id = 'additional-rotation',
-                                                        value=0,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Gravitational Param (km^3/s^2)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000000,
+                                                    step=0.0001,
+                                                    id='grav-param',
+                                                    value=0,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Eff. Blackbody Temp (K)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=100000000,
+                                                    step=0.0001,
+                                                    id='blackbody-temp',
+                                                    value=1,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
                                     ]),
 
-                                    html.H6('Orbiting Body'),
-                                    html.Div([ #Orbiting body cluster
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Radius (km)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 36000000000, 
-                                                        step=0.0001,
-                                                        id = 'orbit-body-radius',
-                                                        value=0,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                            ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Gravitational Param (km^3/s^2)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 10000000000, 
-                                                        step=0.0001,
-                                                        id = 'grav-param',
-                                                        value=0,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                            ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Eff. Blackbody Temp (K)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 100000000, 
-                                                        step=0.0001,
-                                                        id = 'blackbody-temp',
-                                                        value=1,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                                ]),
-                                            ]),
-
-                                    ], className='save-container'),
+                                ], className='save-container'),
+                                html.Div([
                                     html.Div([
-                                        html.Div([
                                         dbc.FormGroup(
                                             [
                                                 dbc.Label("Albedo Factor"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 1, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=1,
                                                     step=0.0001,
-                                                    id = 'orbiting-albedo',
+                                                    id='orbiting-albedo',
                                                     value=0,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
-                                        ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Solar Const. above Atmosphere (W/m^2)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 10000000, 
-                                                        step=0.0001,
-                                                        id = 'solar-const-atm',
-                                                        value=1,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
-                                            ]),
-                                        ]),
-                                    ], className='save-container'),
-                                    
-                                    html.H6('Solar Position'),
+                                    ]),
                                     html.Div([
-                                        html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Solar Const. above Atmosphere (W/m^2)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000,
+                                                    step=0.0001,
+                                                    id='solar-const-atm',
+                                                    value=1,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
+                                            ]),
+                                    ]),
+                                ], className='save-container'),
+
+                                html.H6('Solar Position'),
+                                html.Div([
+                                    html.Div([
                                         dbc.FormGroup(
                                             [
                                                 dbc.Label("Right Ascension of Sun (deg)"),
                                                 dbc.Input(
-                                                    type = "number", 
-                                                    min = 0, 
-                                                    max = 1000000, 
+                                                    type="number",
+                                                    min=0,
+                                                    max=1000000,
                                                     step=0.0001,
-                                                    id = 'right-ascension-sun',
+                                                    id='right-ascension-sun',
                                                     value=0,
-                                                    className = 'styled-numeric-input',
+                                                    className='styled-numeric-input',
                                                     debounce=True)
                                             ]),
-                                        ]),
-                                        html.Div([
-                                            dbc.FormGroup(
-                                                [
-                                                    dbc.Label("Declination of Sun (deg)"),
-                                                    dbc.Input(
-                                                        type = "number", 
-                                                        min = 0, 
-                                                        max = 10000000, 
-                                                        step=0.0001,
-                                                        id = 'declination-sun',
-                                                        value=1,
-                                                        className = 'styled-numeric-input',
-                                                        debounce=True)
+                                    ]),
+                                    html.Div([
+                                        dbc.FormGroup(
+                                            [
+                                                dbc.Label("Declination of Sun (deg)"),
+                                                dbc.Input(
+                                                    type="number",
+                                                    min=0,
+                                                    max=10000000,
+                                                    step=0.0001,
+                                                    id='declination-sun',
+                                                    value=1,
+                                                    className='styled-numeric-input',
+                                                    debounce=True)
                                             ]),
-                                        ]),
-                                    ], className='save-container'),
-                                
-                            ], id='complex-orbit-container', className = 'save-container'),
+                                    ]),
+                                ], className='save-container'),
+
+                            ], id='complex-orbit-container', className='save-container'),
                             html.Hr(),
                             html.Div([
                                 html.P("Click for detailed help"),
-                                html.Img(src=app.get_asset_url('help.png'), className = 'helpButton', id='orbit-help-button'),
+                                html.Img(src=app.get_asset_url('help.png'), className='helpButton',
+                                         id='orbit-help-button'),
                             ], className='help-button-container'),
                         ], className='tab-container')
 
                     ], className='custom-tab')
                     #####################################################################################################################
-                
+
                 ])
             ], className='pretty_container', id='all-tab-container'),
 
@@ -763,65 +790,9 @@ def layout(app):
                 html.Div([  # tabs of graphs
                     dcc.Tabs(id="graph-custom-tabs", children=[
                         dcc.Tab(label='Thermal', children=[
-                            dcc.Graph(
-                                id='thermal-graph', className='graph-style', 
-                                figure={
-                                    'data': [],
-                                    'layout': go.Layout(
-                                        title='Temperature',
-                                        autosize=True,
-                                        legend_orientation='h',
-                                        legend=dict(x=0.2, y=-0.05),
-                                        margin=dict(l=50, r=50, t=50, b=50),
-                                        xaxis=dict(domain=[0.1, 0.9], title='Orbit Time (minutes)', position=0),
-                                        yaxis=dict(
-                                            title='V', titlefont=dict(
-                                                color='rgb(255, 0, 0)'
-
-                                            ),
-                                            tickfont=dict(
-                                                color='rgb(255, 0, 0)'
-                                            )
-                                        ),
-                                        yaxis2=dict(
-                                            title='%',
-                                            titlefont=dict(
-                                                color='rgb(0, 255, 100)'
-                                            ),
-                                            tickfont=dict(
-                                                color='rgb(0, 255, 100)'
-                                            ),
-                                            overlaying='y',
-                                            side='right'
-
-                                        ),
-                                        yaxis3=dict(title="Current (A)",
-                                                    titlefont=dict(
-                                                        color="rgb(0,0,255)"
-                                                    ),
-                                                    tickfont=dict(
-                                                        color="rgb(0,0,255)"
-                                                    ),
-                                                    anchor="free",
-                                                    overlaying="y",
-                                                    side="left",
-                                                    position=0.05),
-                                        yaxis4=dict(title="Ahr",
-                                                    titlefont=dict(
-                                                        color="rgb(210,194,49)"
-                                                    ),
-                                                    tickfont=dict(
-                                                        color="rgb(210,194,49)"
-                                                    ),
-                                                    anchor="free",
-                                                    overlaying="y",
-                                                    side="right",
-                                                    position=0.95)
-                                    )
-                                }
-                            )
+                            graph2
                         ]),
-                        
+
                     ], vertical=True),
                 ], id='graph-tab-container', className='pretty_container'),
             ], className='block-display')
@@ -833,7 +804,8 @@ def layout(app):
         # general help
         html.Div([
             html.Div([html.Div(children=[
-                html.Div([html.Button("X", id='close-general-popup', className='closeButton')], className = 'close-container'),
+                html.Div([html.Button("X", id='close-general-popup', className='closeButton')],
+                         className='close-container'),
                 html.H6("General Instructions"),
                 html.Hr(),
                 dcc.Markdown(['''
@@ -846,15 +818,16 @@ def layout(app):
                 __*Importing:*__ Select from any of the presets or upload your own custom file. Any file type can be uploaded to the custom file select. Each file type corresponds to a tab in the simulation. EOL Factors are only stored in the system files.
                 
                 '''
-                ],className='modal-text'),
+                              ], className='modal-text'),
             ], className='modal-content'),
-                
+
             ], className='popup-container')
         ], style={"display": 'none'}, className='modal', id='general-help-container'),
         # battery help
         html.Div([
             html.Div([html.Div(children=[
-                html.Div([html.Button("X", id='close-battery-popup', className='closeButton')], className = 'close-container'),
+                html.Div([html.Button("X", id='close-battery-popup', className='closeButton')],
+                         className='close-container'),
                 html.H6("Battery Instructions"),
                 html.Hr(),
                 dcc.Markdown(['''
@@ -870,14 +843,15 @@ def layout(app):
                 
                 __*Charging/Discharging curves:*__ Upload battery charging curve data for 8 cells in series
                 '''
-                ],className='modal-text'),
+                              ], className='modal-text'),
             ], className='modal-content'),
             ], className='popup-container')
         ], style={"display": 'none'}, className='modal', id='battery-help-container'),
         # load help
         html.Div([
             html.Div([html.Div(children=[
-                html.Div([html.Button("X", id='close-load-popup', className='closeButton')], className = 'close-container'),
+                html.Div([html.Button("X", id='close-load-popup', className='closeButton')],
+                         className='close-container'),
                 html.H6("Load Instructions"),
                 html.Hr(),
                 dcc.Markdown(['''
@@ -887,14 +861,15 @@ def layout(app):
                
                 __*Custom periodic load:*__  Same functionality as custom load. If the given profile is shorter than the load, it will go back to the start of the profile. (Loop until the simulation ends)
                 '''
-                ],className='modal-text'),
+                              ], className='modal-text'),
             ], className='modal-content'),
             ], className='popup-container')
         ], style={"display": 'none'}, className='modal', id='load-help-container'),
         # orbit help
         html.Div([
             html.Div([html.Div(children=[
-                html.Div([html.Button("X", id='close-orbit-popup', className='closeButton')], className = 'close-container'),
+                html.Div([html.Button("X", id='close-orbit-popup', className='closeButton')],
+                         className='close-container'),
                 html.H6("Orbit Instructions"),
                 html.Hr(),
                 dcc.Markdown(['''
@@ -904,9 +879,9 @@ def layout(app):
 
                 __*LEO:*__ The simulation starts at the orbit’s noon point (middle of sun time). Changing the start time will change this starting position, i.e. If you had a 90 min orbit with a 40 min eclipse, you can adjust to start at the beginning of an eclipse by setting your start time at 25 mins.
                 '''
-                ],className='modal-text'),
+                              ], className='modal-text'),
 
-                html.Img(src=app.get_asset_url('eclipse graphic.png'), width = '350px'),
+                html.Img(src=app.get_asset_url('eclipse graphic.png'), width='350px'),
 
                 dcc.Markdown(['''
                 __*L1/L2:*__ The specified eclipse time will occur relative to the given start and end times. It is a one time eclipse that does not occur periodically. 
@@ -914,14 +889,15 @@ def layout(app):
                 * L1:(149.6/(148.11+2.5))**2
                 * L2:(149.6/(151.1+2.5))**2
                 '''
-                ],className='modal-text'),
+                              ], className='modal-text'),
             ], className='modal-content'),
             ], className='popup-container')
         ], style={"display": 'none'}, className='modal', id='orbit-help-container'),
         # SA help
         html.Div([
             html.Div([html.Div(children=[
-                html.Div([html.Button("X", id='close-solar-popup', className='closeButton')], className = 'close-container'),
+                html.Div([html.Button("X", id='close-solar-popup', className='closeButton')],
+                         className='close-container'),
                 html.H6("Solar Array Instructions"),
                 html.Hr(),
                 dcc.Markdown(['''
@@ -937,14 +913,15 @@ def layout(app):
                 
                 __*Solar Wings:*__ Each row of the table represents one wing. For the spinner model, the roll and pitch angles will not be used for calculation and are grayed out.
                 '''
-                ],className='modal-text'),
+                              ], className='modal-text'),
             ], className='modal-content'),
             ], className='popup-container')
         ], style={"display": 'none'}, className='modal', id='solar-help-container'),
         # Export Help
         html.Div([
             html.Div([html.Div(children=[
-                html.Div([html.Button("X", id='close-export-popup', className='closeButton')], className = 'close-container'),
+                html.Div([html.Button("X", id='close-export-popup', className='closeButton')],
+                         className='close-container'),
                 html.H6("Export Instructions"),
                 html.Hr(),
                 dcc.Markdown(['''
@@ -954,7 +931,7 @@ def layout(app):
 
                 __*Export Raw Data:*__ Exports each graph outputted as raw Excel data in different sheets
                 '''
-                ],className='modal-text'),
+                              ], className='modal-text'),
             ], className='modal-content'),
             ], className='popup-container')
         ], style={"display": 'none'}, className='modal', id='export-help-container'),

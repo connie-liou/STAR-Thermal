@@ -1,5 +1,7 @@
 import os
 import sys
+
+from GUI.thermalLoop import thermalLoop
 from exceptions import *
 
 import dash
@@ -41,15 +43,6 @@ layout(app)
 
 
 # CallBacks #####################################################################################################
-# @app.callback(
-#     [Output(component_id='simple-orbit-container', component_property='style')],
-#     [Input('run_button', 'n_clicks')]
-# )
-# def printSomething(clicks):
-#     print("This printed something")
-#     print(f'clicks: {clicks}')
-#     return [{'display': 'none'}]
-
 
 @app.callback([Output('node-table', 'columns'), Output('radiation-table', 'columns'),
                Output('radiation-table', 'data'), Output('conductance-table', 'columns'),
@@ -129,12 +122,6 @@ def addNodes(numNodes, radActive, condActive, nodeCols, radCols, radRows, condCo
         return [nodeCols, radCols, radRows, condCols, condRows, numNodes, dash.no_update, dash.no_update]
 
 
-# @app.callback([Output('radiation-table', 'style-cell'), Output('conductance-table', 'style-cell')],
-#             [Input('radiation-table','data'), Input('conductance-table', 'data')],
-#             [State('num-nodes', 'value'),State('radiation-table', 'columns'), State('conductance-table', 'columns')])
-# def addNodes(radData, condData, numNodes, radCols, condCols):
-
-
 @app.callback(Output('confirm-zerodivision-error', 'displayed'), [Input('confirm-zerodivision-error', 'message')],
               [State('run_button', 'n_clicks'), State('prev_clicks_run', 'children')])
 def display_confirm(value, clicks, prevClicks):
@@ -186,6 +173,8 @@ def use_simple_orbit(orbitType):
     else:
         return {'display': 'none'}, {'display': 'block'}
 
+
 popupCallbacks(app)
+thermalLoop(app)
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)
