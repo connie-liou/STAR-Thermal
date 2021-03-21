@@ -15,52 +15,51 @@ This file contains the HTML layout of the application.
 
 
 def layout(app):
-    # graph = dcc.Graph(id='thermal-graph',
-    #                   className='graph-style',
-    #                   figure={'data': [],
-    #                           'layout': go.Layout(
-    #                               title='Temperature',
-    #                               autosize=True,
-    #                               legend_orientation='h',
-    #                               legend=dict(x=0.2,
-    #                                           y=-0.05),
-    #                               margin=dict(l=50, r=50, t=50, b=50),
-    #                               xaxis=dict(
-    #                                   domain=[0.1, 0.9],
-    #                                   title='Orbit Time (minutes)',
-    #                                   position=0),
-    #                               yaxis=dict(title='V',
-    #                                          titlefont=dict(
-    #                                              color='rgb(255, 0, 0)'),
-    #                                          tickfont=dict(
-    #                                              color='rgb(255, 0, 0)')),
-    #                               yaxis2=dict(title='%',
-    #                                           titlefont=dict(
-    #                                               color='rgb(0, 255, 100)'),
-    #                                           tickfont=dict(
-    #                                               color='rgb(0, 255, 100)'),
-    #                                           overlaying='y',
-    #                                           side='right'),
-    #                               yaxis3=dict(
-    #                                   title="Current (A)",
-    #                                   titlefont=dict(
-    #                                       color="rgb(0,0,255)"),
-    #                                   tickfont=dict(
-    #                                       color="rgb(0,0,255)"),
-    #                                   anchor="free",
-    #                                   overlaying="y",
-    #                                   side="left",
-    #                                   position=0.05),
-    #                               yaxis4=dict(title="Ahr",
-    #                                           titlefont=dict(
-    #                                               color="rgb(210,194,49)"),
-    #                                           tickfont=dict(
-    #                                               color="rgb(210,194,49)"),
-    #                                           anchor="free",
-    #                                           overlaying="y",
-    #                                           side="right",
-    #                                           position=0.95))})
-    graph2 = dcc.Graph(id='thermal-graph')
+    graph = dcc.Graph(id='thermal-graph',
+                      className='graph-style',
+                      figure={'data': [],
+                              'layout': go.Layout(
+                                  title='Temperature',
+                                  autosize=True,
+                                  legend_orientation='h',
+                                  legend=dict(x=0.2,
+                                              y=-0.05),
+                                  margin=dict(l=50, r=50, t=50, b=50),
+                                  xaxis=dict(
+                                      domain=[0.1, 0.9],
+                                      title='Orbit Time (minutes)',
+                                      position=0),
+                                  yaxis=dict(title='V',
+                                             titlefont=dict(
+                                                 color='rgb(255, 0, 0)'),
+                                             tickfont=dict(
+                                                 color='rgb(255, 0, 0)')),
+                                  yaxis2=dict(title='%',
+                                              titlefont=dict(
+                                                  color='rgb(0, 255, 100)'),
+                                              tickfont=dict(
+                                                  color='rgb(0, 255, 100)'),
+                                              overlaying='y',
+                                              side='right'),
+                                  yaxis3=dict(
+                                      title="Current (A)",
+                                      titlefont=dict(
+                                          color="rgb(0,0,255)"),
+                                      tickfont=dict(
+                                          color="rgb(0,0,255)"),
+                                      anchor="free",
+                                      overlaying="y",
+                                      side="left",
+                                      position=0.05),
+                                  yaxis4=dict(title="Ahr",
+                                              titlefont=dict(
+                                                  color="rgb(210,194,49)"),
+                                              tickfont=dict(
+                                                  color="rgb(210,194,49)"),
+                                              anchor="free",
+                                              overlaying="y",
+                                              side="right",
+                                              position=0.95))})
     app.layout = html.Div([
         html.Div(id='junk'),
         html.Div(id='prev_clicks_run', hidden=True),
@@ -790,7 +789,7 @@ def layout(app):
                 html.Div([  # tabs of graphs
                     dcc.Tabs(id="graph-custom-tabs", children=[
                         dcc.Tab(label='Thermal', children=[
-                            graph2
+                            graph
                         ]),
 
                     ], vertical=True),
