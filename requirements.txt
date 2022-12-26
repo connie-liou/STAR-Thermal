@@ -39,4 +39,4 @@ typed-ast==1.4.2
 update==0.0.1
 waitress==2.0.0
 Werkzeug==1.0.1
-wheel==0.36
+wheel==0.38.1
